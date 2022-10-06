@@ -3,7 +3,7 @@
     <!-- container fluid takes 100% width at all breakpoints -->
     <div class="container-fluid">
 
-        <a class="navbar-brand text-light ">
+        <a class="navbar-brand text-light" routerLink="/">
             <img src="assets/img/logo.png" alt="Logo" width="80" height="50"  >
         </a>
         
@@ -12,7 +12,7 @@
                 <input class="form-control" type="search" placeholder="Szukaj" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit"> <i class="bi bi-search"></i></button>
             </form>
-            <i class="bi bi-person-circle text-dark  mt-1 p-1 d-none d-sm-block"></i>
+            <a routerLink="/authorization"><i class="bi bi-person-circle text-dark  mt-1 p-1 d-none d-sm-block"></i></a>
             <i class="bi bi-cart text-dark mt-2 d-none d-sm-block"></i>
         </div>
     </div>
