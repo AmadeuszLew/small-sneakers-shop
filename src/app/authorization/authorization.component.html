@@ -5,8 +5,12 @@
           <img src="assets/img/jordan_mid.jpg"
             class="img-fluid  rounded my-2 mh-30" alt="Sample image">
         </div>
-        <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-          <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)">
+        <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1" *ngIf="isLoading">
+          <app-loading-spinner></app-loading-spinner>
+        </div>
+        <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1" *ngIf="!isLoading">
+          <p class="alert alert-danger" *ngIf="error">{{error}}</p>
+          <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" >
   
             <!-- Email input -->
             <div class="form-outline mb-4">
