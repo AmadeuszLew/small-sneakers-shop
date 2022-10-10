@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { DataComponent } from './shared/data/data.component';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { DataComponent } from './shared/data/data.component';
     HeaderComponent,
     AuthorizationComponent,
     LoadingSpinnerComponent,
-    DataComponent
+    DataComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
