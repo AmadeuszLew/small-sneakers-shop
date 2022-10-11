@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
-import { Subject, throwError} from 'rxjs';//
+import { BehaviorSubject, Subject, throwError} from 'rxjs';//
 import { User } from "./user.model";
+import { Router } from "@angular/router";
 export interface AuthResponseData{
     idToken:string,
     email:string,
@@ -14,8 +15,10 @@ export interface AuthResponseData{
 
 @Injectable({providedIn:'root'})
 export class AuthorizationService{
-    user = new Subject<User>();
-    constructor(private http:HttpClient){}
+    //user = new Subject<User>();//this subject is a subject when u can subscribe, and get info whenever new data is emitted
+    user = new BehaviorSubject<User>(null);//difference is this subject gives subscribes imidiate access to previously emitted value
+    private timer:any;
+    constructor(private http:HttpClient, private router:Router){}
     signup(email:string,password:string,){//http client doest nothing without subscribing, so lets return this prepered observable (it makes more sense cuz if we get an error message, we might wanna display it)
         return this.http
         .post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyD8s42F2OkYdjnX8LYpzbrKxi8VVV1sDu8',
@@ -45,13 +48,45 @@ export class AuthorizationService{
             })
         );
     }
-
+    logout(){
+        this.user.next(null);
+        this.router.navigate(['/']);
+        localStorage.removeItem('userData');
+        if(this.timer){
+            clearTimeout(this.timer)
+        }
+        this.timer=null;
+    }
+    autoLogin(){
+        const userData= JSON.parse(localStorage.getItem('userData'));
+        if(!userData){
+            return;
+        }
+        const loadUser= new User(
+            userData.email,
+            userData.id,
+            userData._token,
+            new Date(userData._tokenExpirationDate)
+        );
+        // if (loadUser.token){
+        //     const expirationDuration= new Date(userData._tokenExpirationDate).getTime()- new Date().getTime()
+        //     this.autoLogout(expirationDuration)
+        //     this.user.next(loadUser);
+        // }
+    }
     private handleAuthentication(email:string,token:string,expiresIn:number,userId:string){
         const expirationDate=new Date( new Date().getTime()+ +expiresIn*1000);
         const user= new User(email,userId,token,expirationDate);
         this.user.next(user);
+        // this.autoLogout(expiresIn*1000);
+        localStorage.setItem('userData',JSON.stringify(user));
+        console.log('imhere')
     };
-
+    // autoLogout(expirationDuration:number){
+    //     this.timer=setTimeout(()=>{
+    //         this.logout();
+    //     }, expirationDuration)
+    // }
     private handleError(errorRes:HttpErrorResponse){
         let errorMessage='An unknown error occurred!';
         if (!errorRes.error || !errorRes.error.error){

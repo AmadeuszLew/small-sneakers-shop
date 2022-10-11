@@ -12,7 +12,10 @@
                 <input class="form-control" type="search" placeholder="Szukaj" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit"> <i class="bi bi-search"></i></button>
             </form>
-            <a routerLink="/authorization"><i class="bi bi-person-circle text-dark  mt-1 p-1 d-none d-sm-block"></i></a>
+            <a routerLink="/user" *ngIf="isAuthenticated">
+                <i class="bi bi-person-check text-dark  mt-1 p-1 d-none d-sm-block"></i></a>
+            <a routerLink="/authorization" *ngIf="!isAuthenticated">
+                <i class="bi bi-person-plus text-dark  mt-1 p-1 d-none d-sm-block"></i></a>
             <i class="bi bi-cart text-dark mt-2 d-none d-sm-block"></i>
         </div>
     </div>

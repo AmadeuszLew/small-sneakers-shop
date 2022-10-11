@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {AuthorizationComponent} from './authorization/authorization.component'
+import { AuthorizationGuard } from './authorization/authorization.guard';
 import { UserComponent } from './user/user.component';
 
 const routes: Routes = [
   {path:'authorization', component:AuthorizationComponent},
-  {path:'user',component:UserComponent}
+  {path:'user',canActivate:[AuthorizationGuard],component:UserComponent}
   
 ];
 

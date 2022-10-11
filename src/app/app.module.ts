@@ -10,7 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { DataComponent } from './shared/data/data.component';
 import { UserComponent } from './user/user.component';
-
+import { AlertsService } from './shared/alerts.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +26,7 @@ import { UserComponent } from './user/user.component';
     FormsModule,
     HttpClientModule 
   ],
-  providers: [],
+  providers: [AlertsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
