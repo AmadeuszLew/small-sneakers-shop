@@ -11,6 +11,9 @@ import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinne
 import { DataComponent } from './shared/data/data.component';
 import { UserComponent } from './user/user.component';
 import { AlertsService } from './shared/alerts.service';
+import { SneakersComponent } from './sneakers/sneakers.component';
+import { SneakerDetailComponent } from './sneakers/sneaker-detail/sneaker-detail.component';
+import { SneakserService } from './sneakers/sneakers.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +21,9 @@ import { AlertsService } from './shared/alerts.service';
     AuthorizationComponent,
     LoadingSpinnerComponent,
     DataComponent,
-    UserComponent
+    UserComponent,
+    SneakersComponent,
+    SneakerDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +31,7 @@ import { AlertsService } from './shared/alerts.service';
     FormsModule,
     HttpClientModule 
   ],
-  providers: [AlertsService],
+  providers: [AlertsService, SneakserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
