@@ -1,7 +1,9 @@
 import { SizeChart } from "../shared/models/size-chart.model";
 import { Sneaker } from "./sneaker.model";
+import { BehaviorSubject , Subject} from 'rxjs';
 
 export class SneakserService{
+    sneakersChanged= new Subject<Sneaker[]>();
     private sneakers:Sneaker[]=[
         new Sneaker(
             '555088-711',
@@ -10,7 +12,7 @@ export class SneakserService{
             'Jordan',
             'TAXI/BLACK-SAIL',
             999,
-            '',
+            'assets/img/list_items/jordan_1_taxi.jpeg',
             [
                 new SizeChart(36,1),
                 new SizeChart(36.5,4),
@@ -42,7 +44,7 @@ export class SneakserService{
             'Yeezy',
             'Slate',
             999,
-            '',
+            'assets/img/list_items/yeezy_350v2_Salte.jpg',
             [
                 new SizeChart(36,1),
                 new SizeChart(36.5,4),
@@ -74,7 +76,7 @@ export class SneakserService{
             'Yeezy',
             'Granite',
             999,
-            '',
+            'assets/img/list_items/yeezy_500_granite.jpg',
             [
                 new SizeChart(36,0),
                 new SizeChart(36.5,0),
@@ -106,7 +108,7 @@ export class SneakserService{
             'Yeezy',
             'Blush',
             999,
-            '',
+            'assets/img/list_items/yeezy_500.png',
             [
                 new SizeChart(36,1),
                 new SizeChart(36.5,4),
@@ -138,7 +140,7 @@ export class SneakserService{
             'Yeezy',
             'Bone',
             449,
-            '',
+            'assets/img/list_items/slide_bone.jpg',
             [
                 new SizeChart(36,1),
                 new SizeChart(36.5,4),
@@ -170,7 +172,7 @@ export class SneakserService{
             'Adidas',
             'WHITE/FOOTWEAR WHITE/BOLD BLUE',
             499,
-            '',
+            'assets/img/list_items/adi200.png',
             [
                 new SizeChart(36,1),
                 new SizeChart(36.5,4),
@@ -202,7 +204,7 @@ export class SneakserService{
             'Nike',
             'PURE PLATINUM/WHITE-WOLF GREY',
             899,
-            'https://images.stockx.com/images/Nike-Dunk-Low-Wolf-Grey-Pure-Platinum.jpg',
+            'assets/img/list_items/pure_platinium.jpg',
             [
                 new SizeChart(36,1),
                 new SizeChart(36.5,4),
@@ -234,12 +236,12 @@ export class SneakserService{
             'Nike',
             'TRUE RED/BLACK',
             6889,
-            '',
+            'assets/img/list_items/pure_blood.jpeg',
             [
                 new SizeChart(36,0),
-                new SizeChart(36.5,1),
+                new SizeChart(36.5,0),
                 new SizeChart(37,0),
-                new SizeChart(37.5,2),
+                new SizeChart(37.5,0),
                 new SizeChart(38,0),
                 new SizeChart(38.5,0),
                 new SizeChart(39,0),
@@ -250,8 +252,8 @@ export class SneakserService{
                 new SizeChart(41.5,0),
                 new SizeChart(42,4),
                 new SizeChart(42.5,0),
-                new SizeChart(43,2),
-                new SizeChart(43.5,1),
+                new SizeChart(43,0),
+                new SizeChart(43.5,0),
                 new SizeChart(44,0),
                 new SizeChart(44.5,0),
                 new SizeChart(45,0),
@@ -263,7 +265,14 @@ export class SneakserService{
     getAllSneakers(){
         return this.sneakers.slice();
     }
-    getSneaker(index:number){
-        return this.sneakers[index];
+    getSneaker(id){
+        return this.sneakers[this.sneakers.indexOf(id)];
     }
+    filterByModel(model:string){
+        const snkrs=this.sneakers.filter((snkrs)=>{
+          return snkrs.model.includes(model)
+        })
+        this.sneakers=snkrs;
+        this.sneakersChanged.next(this.sneakers.slice())
+      }
 }

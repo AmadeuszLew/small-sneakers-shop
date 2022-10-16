@@ -1,2 +1,29 @@
-<p>sneakers works!</p>
-<button (click)="filterByModel('Yeezy 500')">dej izi 500</button>
+<div class="container">
+    <div class="row">
+        <!-- <div class="col-md-3 col-6 my-1" *ngFor="let _ of [].constructor(8)">
+            <div class="card">
+                <img class="card-img-top" src="https://cdn.pixabay.com/photo/2017/09/20/11/31/sneakers-2768218_960_720.png" alt="Card image cap">
+                <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text overflow">This is aaaaaaaaaaaaaa</p>
+                <p class="card-text">499 zł</p>
+                </div>
+        </div> -->
+        <div class="col-md-3 col-sm-4 col-6 my-1" *ngFor="let item of sneakers">
+            <div class="card h-500" (mouseover)="mouseOver=true" (mouseout)="mouseOver=false">
+                <img class="card-img-top" src={{item.imagePath}} alt="Card image cap">
+                <!-- <div class="card-body" *ngIf="!mouseOver" [@fadeOut]> -->
+                <div class="card-body">
+                <h5 class="card-title">{{item.brand}}</h5>
+                    <p class="card-text overflow">{{item.model+" "+item.name}}</p>
+                    <p class="card-text">{{item.price}} zł</p>
+                    <!-- <div class="card-body" *ngIf="mouseOver" [@slideInOut]> -->
+                    <div>
+                        <p  class="card-text">{{listSizes(item.sizesAvailable)}} </p>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <button (click)="filterSnkrsByModel('Yeezy 500')">dej izi 500</button>
+    <button (click)="logIt()">log</button>
+</div>
