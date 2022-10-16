@@ -1,1 +1,27 @@
-<p>sneaker-detail works!</p>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-sm-8 col-12  mh-100">
+            <img src="{{sneaker.imagePath}}" class="img-fluid " alt="Responsive image">
+        </div>
+        <div class="col-md-6 col-sm-8 col-12  mh-100 pt-4">
+            <h4>{{sneaker.brand}}</h4>
+            <h5>{{sneaker.model+" "+sneaker.name}}</h5>
+            <h6> Kod produktu: {{sneaker.sku}}</h6>
+            <br>
+            <span class="text-muted">Kolorystyka: {{sneaker.colorway}}</span>
+            <h6 class="">{{sneaker.price}} PLN</h6>
+            <div class="dropdown border">
+                <a class="btn btn-secondary dropdown-toggle w-100" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                  wybierz rozmiar
+                </a>
+                <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuLink" >
+                    <li class="" *ngFor="let size of sneaker.sizesAvailable" >
+                        <a class="dropdown-item  {{size.avability>0 ? '':'disabled'}}">{{size.size}}</a>
+                    </li>
+                </ul>
+              </div>
+              <button class="btn btn-success mt-2 w-100 p-1 mt-3">dodaj do koszyka</button>
+        </div>
+        
+    </div>
+</div>
