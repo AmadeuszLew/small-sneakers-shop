@@ -265,8 +265,12 @@ export class SneakserService{
     getAllSneakers(){
         return this.sneakers.slice();
     }
-    getSneaker(id){
-        return this.sneakers[this.sneakers.indexOf(id)];
+    //getSneaker(id:string){
+    getSneaker(id:string){
+        return this.sneakers.find(x => x.sku === id)
+    }
+    printSneakerName(sneaker:Sneaker){
+        return sneaker.model+" "+sneaker.name
     }
     filterByModel(model:string){
         const snkrs=this.sneakers.filter((snkrs)=>{
