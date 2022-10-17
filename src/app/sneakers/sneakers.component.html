@@ -10,7 +10,7 @@
                 </div>
         </div> -->
         <div class="col-md-3 col-sm-4 col-6 my-1" *ngFor="let item of sneakers">
-            <div class="card h-500" (mouseover)="mouseOver=true" (mouseout)="mouseOver=false">
+            <div class="card h-500" (mouseover)="mouseOver=true" (mouseout)="mouseOver=false" routerLink="/{{item.sku}}">
                 <img class="card-img-top" src={{item.imagePath}} alt="Card image cap">
                 <!-- <div class="card-body" *ngIf="!mouseOver" [@fadeOut]> -->
                 <div class="card-body">
@@ -26,4 +26,5 @@
     </div>
     <button (click)="filterSnkrsByModel('Yeezy 500')">dej izi 500</button>
     <button (click)="logIt()">log</button>
+    <button (click)="filterSnkrsByModel('')">dej all</button>
 </div>

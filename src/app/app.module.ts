@@ -14,6 +14,7 @@ import { AlertsService } from './shared/alerts.service';
 import { SneakersComponent } from './sneakers/sneakers.component';
 import { SneakerDetailComponent } from './sneakers/sneaker-detail/sneaker-detail.component';
 import { SneakserService } from './sneakers/sneakers.service';
+import { CartComponent } from './cart/cart.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +24,8 @@ import { SneakserService } from './sneakers/sneakers.service';
     DataComponent,
     UserComponent,
     SneakersComponent,
-    SneakerDetailComponent
+    SneakerDetailComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,

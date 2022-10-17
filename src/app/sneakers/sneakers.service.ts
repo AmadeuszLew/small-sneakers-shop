@@ -273,10 +273,16 @@ export class SneakserService{
         return sneaker.model+" "+sneaker.name
     }
     filterByModel(model:string){
-        const snkrs=this.sneakers.filter((snkrs)=>{
+        let snkrs=this.sneakers.filter((snkrs)=>{
           return snkrs.model.includes(model)
         })
-        this.sneakers=snkrs;
-        this.sneakersChanged.next(this.sneakers.slice())
+        //this.sneakers=snkrs;
+        this.sneakersChanged.next(snkrs)
+      }
+    filterByBrand(brand:string){
+        let snkrs=this.sneakers.filter((snkrs)=>{
+          return snkrs.brand.includes(brand)
+        })
+        this.sneakersChanged.next(snkrs)
       }
 }
