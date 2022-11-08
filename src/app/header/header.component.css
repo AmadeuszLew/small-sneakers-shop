@@ -1,0 +1,12 @@
+#mobile-navbar{
+    background-color: #f7f7f7;
+}
+#mobile-side-nav{
+    width: 280px;
+}
+#mobile-side-nav-body{
+    background-color: red;
+}
+.bi{
+    cursor: pointer;
+}
