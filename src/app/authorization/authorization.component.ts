@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {NgForm} from '@angular/forms'
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { AlertsService } from '../shared/alerts.service';
 import { AuthorizationService, AuthResponseData } from './authorization.service';
 @Component({
   selector: 'app-authorization',
@@ -12,7 +13,7 @@ export class AuthorizationComponent implements OnInit {
   isLoginMode=true;
   isLoading=false;
   error:string=null;
-  constructor(private authorizationService: AuthorizationService, private router:Router) { }
+  constructor(private authorizationService: AuthorizationService, private router:Router, private alertService: AlertsService) { }
 
   ngOnInit() {
   }
@@ -42,7 +43,8 @@ export class AuthorizationComponent implements OnInit {
     authorizationObs.subscribe(resData=>{
         console.log(resData);
         this.isLoading=false;
-        this.router.navigate(['/'])
+        this.router.navigate(['/']);
+        this.alertService.riseAlert('success','Zalogowano')
       },
       errorMessage=>{
         console.log(errorMessage);

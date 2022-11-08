@@ -1,10 +1,3 @@
-
-#main-navbar{
-    background-color: #ede9e8;
-}
-#category-navbar{
-    background-color: #f7f7f7;
-}
 #mobile-navbar{
     background-color: #f7f7f7;
 }
@@ -13,4 +6,7 @@
 }
 #mobile-side-nav-body{
     background-color: red;
+}
+.bi{
+    cursor: pointer;
 }
