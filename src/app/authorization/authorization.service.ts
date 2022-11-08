@@ -4,7 +4,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { BehaviorSubject, Subject, throwError} from 'rxjs';//
 import { User } from "./user.model";
 import { Router } from "@angular/router";
-import { AlertsService } from "../shared/alerts.service";
+import { environment } from '../environments/environment';
 export interface AuthResponseData{
     idToken:string,
     email:string,
@@ -22,7 +22,7 @@ export class AuthorizationService{
     constructor(private http:HttpClient, private router:Router){}
     signup(email:string,password:string,){//http client doest nothing without subscribing, so lets return this prepered observable (it makes more sense cuz if we get an error message, we might wanna display it)
         return this.http
-        .post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyD8s42F2OkYdjnX8LYpzbrKxi8VVV1sDu8',
+        .post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key='+environment.apiKey,
         {
             email:email,
             password:password,
@@ -37,7 +37,7 @@ export class AuthorizationService{
 
     login(email:string,password:string){
         return this.http.post<AuthResponseData>(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD8s42F2OkYdjnX8LYpzbrKxi8VVV1sDu8',
+        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key='+environment.apiKey,
         {
             email:email,
             password:password,
