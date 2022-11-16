@@ -15,6 +15,8 @@ import { SneakersComponent } from './sneakers/sneakers.component';
 import { SneakerDetailComponent } from './sneakers/sneaker-detail/sneaker-detail.component';
 import { SneakserService } from './sneakers/sneakers.service';
 import { CartComponent } from './cart/cart.component';
+import { CartItemComponent } from './cart/cart-item/cart-item.component';
+import { SumUpComponent } from './cart/sum-up/sum-up.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +27,9 @@ import { CartComponent } from './cart/cart.component';
     UserComponent,
     SneakersComponent,
     SneakerDetailComponent,
-    CartComponent
+    CartComponent,
+    CartItemComponent,
+    SumUpComponent
   ],
   imports: [
     BrowserModule,

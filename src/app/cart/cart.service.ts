@@ -7,32 +7,32 @@ import { Product } from './product.model';
 })
 export class CartService{
     //inital value for dev {sku: "555088-711", model: "Jordan 1", name:"Taxi", brand: "Jordan", colorway:"TAXI/BLACK-SAIL", price:999,imagePath:"assets/img/list_items/jordan_1_taxi.jpeg", size: 43}
-    cartSnekaersList:Product[]=[]
+    cartSneakersList:Product[]=[]
     public productList= new BehaviorSubject<Product[]>([]);
     constructor(){}
     
     getCartSneakers(){
-        return this.cartSnekaersList.slice()
+        return this.cartSneakersList.slice()
     }
 
     addToCart(product:Product){
-        this.cartSnekaersList.push(product);
-        this.productList.next(this.cartSnekaersList);
+        this.cartSneakersList.push(product);
+        this.productList.next(this.cartSneakersList);
     }
     clearCart(){
-        this.cartSnekaersList=[]
-        this.productList.next(this.cartSnekaersList)
+        this.cartSneakersList=[]
+        this.productList.next(this.cartSneakersList)
     }
     removeCartItem(product:Product){
-        this.cartSnekaersList.map((a:Product,index:number)=>{
+        this.cartSneakersList.map((a:Product,index:number)=>{
         if(product.sku === a.sku)
-            this.cartSnekaersList.splice(index,1)
+            this.cartSneakersList.splice(index,1)
         })
-        this.productList.next(this.cartSnekaersList)
+        this.productList.next(this.cartSneakersList)
     }
     getTotal(){
         let cartTotal=0;
-        this.cartSnekaersList.map((x:Product)=>{
+        this.cartSneakersList.map((x:Product)=>{
             cartTotal+=x.price;
         })
         return cartTotal
