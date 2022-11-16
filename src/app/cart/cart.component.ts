@@ -21,6 +21,7 @@ export class CartComponent implements OnInit {
     subscribe(
       (products:Product[])=>{
         this.products=products
+        this.grandTotal=this.cartService.getTotal()
       }
     )
     console.log(this.products)
@@ -28,5 +29,4 @@ export class CartComponent implements OnInit {
   ngOnDestroy():void{
     this.sneakerAddedSubscription.unsubscribe();
   }
-
 }

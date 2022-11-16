@@ -1,1 +1,15 @@
-<p>cart-item works!</p>
+<div class="row shadow-sm p-3 mb-5 bg-body rounded">
+    <div class="col-sm-3 ">
+        <img src="{{product.imagePath}}" class="rounded img-fluid" alt="">
+    </div>
+    <div class="col-sm-6 d-inline">
+        <p class="m-0 fw-bold">{{product.model}} {{product.name}}</p>
+        <p class="m-0 fs-6">{{product.colorway}} {{product.sku}}</p>
+        <p class="m-0 fs-6 fw-semibold">{{product.price}} zł</p>
+        <p class="m-0 fs-6">rozmiar: {{product.size}}</p>
+    </div>
+    <div class="col-sm-3 d-inline">
+        <span class="d-none d-sm-block float-end" (click)="removeFromCart(product)"><i class="bi bi-trash align-middle"></i></span>
+        <button class="btn container-fluid btn-secondary d-block mw-100 d-sm-none" type="button" (click)="removeFromCart(product)">usuń</button>
+    </div>
+</div>
