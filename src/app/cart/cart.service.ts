@@ -8,7 +8,7 @@ import { Product } from './product.model';
 export class CartService{
     //inital value for dev {sku: "555088-711", model: "Jordan 1", name:"Taxi", brand: "Jordan", colorway:"TAXI/BLACK-SAIL", price:999,imagePath:"assets/img/list_items/jordan_1_taxi.jpeg", size: 43}
     cartSneakersList:Product[]=[]
-    public productList= new BehaviorSubject<Product[]>([{sku: "555088-711", model: "Jordan 1", name:"Taxi", brand: "Jordan", colorway:"TAXI/BLACK-SAIL", price:999,imagePath:"assets/img/list_items/jordan_1_taxi.jpeg", size: 43}]);
+    public productList= new BehaviorSubject<Product[]>([]);
     constructor(){}
     
     getCartSneakers(){

@@ -17,10 +17,10 @@ export interface AuthResponseData{
 @Injectable({providedIn:'root'})
 export class AuthorizationService{
     //user = new Subject<User>();//this subject is a subject when u can subscribe, and get info whenever new data is emitted
-    user = new BehaviorSubject<User>(null);//difference is this subject gives subscribes imidiate access to previously emitted value
+    user = new BehaviorSubject<User>(null);//difference is this subject gives subscribes immediate access to previously emitted value
     private timer:any;
     constructor(private http:HttpClient, private router:Router){}
-    signup(email:string,password:string,){//http client doest nothing without subscribing, so lets return this prepered observable (it makes more sense cuz if we get an error message, we might wanna display it)
+    signup(email:string,password:string,){//http client doest nothing without subscribing, so lets return this prepared observable (it makes more sense cuz if we get an error message, we might wanna display it)
         return this.http
         .post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key='+environment.apiKey,
         {
@@ -28,11 +28,11 @@ export class AuthorizationService{
             password:password,
             returnSecureToken:true
         })
-    .pipe(catchError(this.handleError),
-    tap(resData=>{//tap alows to preform some action, without changing the response
-            this.handleAuthentication(resData.email,resData.idToken,+resData.expireIn,resData.localid)
-        })
-    );
+        .pipe(catchError(this.handleError),
+        tap(resData=>{//tap alows to preform some action, without changing the response
+                this.handleAuthentication(resData.email,resData.idToken,+resData.expireIn,resData.localid)
+            })
+        );
     }
 
     login(email:string,password:string){
