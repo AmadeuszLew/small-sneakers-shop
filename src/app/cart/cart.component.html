@@ -49,46 +49,23 @@
         <polygon id="diamond" stroke="#C46F82" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" points="886 705 889 708 886 711 883 708"></polygon>
         <path d="M736,577 C737.65825,577 739,578.34175 739,580 C739,578.34175 740.34175,577 742,577 C740.34175,577 739,575.65825 739,574 C739,575.65825 737.65825,577 736,577 Z" id="bubble-rounded" stroke="#3CBC83" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
     </svg>
-  
     <h5>Twój koszyk jest pusty</h5>
     <button class ="border-0 rounded" routerLink="/">Dodaj coś do niego :)</button>
   </div>
 
 
-<div class="container">
-    <div class="row" *ngFor="let product of products">
-        <div class="col-md-9 col-sm-12" class="">
-            <div class="row gx-3">
-                <div class="col-sm-9 border shadow p-1">
-                    <div class="row">
-                        <div class="col-sm-3 ">
-                            <img src="{{product.imagePath}}" class="rounded img-fluid" alt="">
-                        </div>
-                        <div class="col-sm-6 d-inline">
-                            <p class="m-0 fw-bold">{{product.model}} {{product.name}}</p>
-                            <p class="m-0 fs-6">{{product.colorway}} {{product.sku}}</p>
-                            <p class="m-0 fs-6 fw-semibold">{{product.price}} zł</p>
-                            <p class="m-0 fs-6">rozmiar: {{product.size}}</p>
-                        </div>
-                        <div class="col-sm-3 d-inline ">
-                            <span class="d-none d-sm-block"><i class="bi bi-trash"></i></span>
-                            <button class="btn container-fluid btn-secondary d-block mw-100 d-sm-none" type="button">usuń</button>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="col-sm-3 border shadow p-1 min-height=300">
-                    <h6>Do zapłaty</h6>
-                    <span>wartość produktów </span>
-                    <span>dostawa </span>
-                    <br>
-                    <span class="font-weight-bold">Łącznie do zapłaty (w tym VAT)</span>
-                    <button class="btn btn-success container-fluid">PRZEJDZ DO ZAMÓWIENIA</button>
-                </div>
-            </div>
+<div class="container px-4" *ngIf="products[0]">
+    <div class="row gx-5" >
+        <div class="col-md-9 col-sm-12">
+            <app-cart-item
+                *ngFor="let product of products; let i = index"
+                [product]="product"
+                [index]="i"
+            ></app-cart-item>
         </div>
-        <!-- <div class="col-md-3 col-sm-12">
-            <button class="btn btn-success">PRZEJDZ DO ZAMÓWIENIA</button>
-        </div> -->
+        <div class="col-md-3 col-sm-12">
+        <app-sum-up [grandTotal]="grandTotal">
+        </app-sum-up>
+        </div>
     </div>
 </div>
