@@ -8,8 +8,8 @@ import { AuthorizationService } from './authorization/authorization.service';
 })
 export class AppComponent implements OnInit {
   constructor(private authService: AuthorizationService){}
+  title = 'small-sneakers-shop';
   ngOnInit(): void {
     this.authService.autoLogin();
   }
-  title = 'small-sneakers-shop';
 }

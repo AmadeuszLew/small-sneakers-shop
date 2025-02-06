@@ -1,14 +1,14 @@
 export class Product {
-  public sku:string;
-  public model:string;
+  public sku: string;
+  public model: string;
   public name: string;
-  public brand:string;
-  public colorway:string;
+  public brand: string;
+  public colorway: string;
   public price: number;
   public imagePath: string;
-  public size:number;
+  public size: number;
 
-  constructor(sku: string, model: string, name:string, brand: string, colorway:string, price:number,imagePath:string, size: number) {
+  constructor(sku: string, model: string, name: string, brand: string, colorway: string, price: number, imagePath: string, size: number) {
     this.sku = sku;
     this.model = model;
     this.name = name;
@@ -16,6 +16,6 @@ export class Product {
     this.colorway = colorway;
     this.price = price;
     this.imagePath = imagePath;
-    this.size=size;
+    this.size = size;
   }
 }

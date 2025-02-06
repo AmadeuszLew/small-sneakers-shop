@@ -11,22 +11,23 @@ import { SneakserService } from '../sneakers.service';
   styleUrls: ['./sneaker-detail.component.css']
 })
 export class SneakerDetailComponent implements OnInit {
-  sneaker:Sneaker;
-  sizePicked:number=0;
+  sneaker: Sneaker;
+  sizePicked = 0;
   constructor(private route: ActivatedRoute,
-      private sneakerService: SneakserService, 
-      private cartService: CartService) { }
+              private sneakerService: SneakserService,
+              private cartService: CartService) { }
 
   ngOnInit() {
-    let id = this.route.snapshot.params['id'];
-    this.sneaker=this.sneakerService.getSneaker(id)
-    console.log(this.sneaker)
-    console.log(this.sneakerService.getSneaker(id))
+    const id = this.route.snapshot.params.id;
+    this.sneaker = this.sneakerService.getSneaker(id);
+    console.log(this.sneaker);
+    console.log(this.sneakerService.getSneaker(id));
   }
-  addToCart(product:Sneaker){
-    console.log(this.sizePicked)
-    console.log(product)
-    let addProduct=new Product(product.sku,product.model,product.name,product.brand,product.colorway,product.price,product.imagePath,this.sizePicked)
-    this.cartService.addToCart(addProduct)
+  addToCart(product: Sneaker){
+    console.log(this.sizePicked);
+    console.log(product);
+    const addProduct = new Product(product.sku, product.model, product.name,
+      product.brand, product.colorway, product.price, product.imagePath, this.sizePicked);
+    this.cartService.addToCart(addProduct);
   }
 }

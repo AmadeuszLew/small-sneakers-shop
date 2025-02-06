@@ -22,6 +22,7 @@
     "@popperjs/core": "^2.11.6",
     "bootstrap": "^5.2.2",
     "bootstrap-icons": "^1.9.1",
+    "codelyzer": "^6.0.2",
     "rxjs": "~6.6.7",
     "sweetalert2": "^11.15.10",
     "tslib": "^2.0.0",
@@ -35,6 +36,8 @@
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
+    "angular-eslint": "19.0.2",
+    "eslint": "^9.16.0",
     "karma": "~6.4.4",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage-istanbul-reporter": "~3.0.2",
@@ -43,6 +46,7 @@
     "protractor": "~7.0.0",
     "ts-node": "~7.0.0",
     "tslint": "~6.1.0",
-    "typescript": "~5.4.5"
+    "typescript": "~5.4.5",
+    "typescript-eslint": "8.18.0"
   }
 }

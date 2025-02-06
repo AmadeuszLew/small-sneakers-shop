@@ -8,10 +8,10 @@ import { CartService } from '../cart.service';
 })
 export class SumUpComponent implements OnInit {
 
-  constructor(private cartService:CartService) { }
-  @Input() grandTotal:number;
+  constructor(private cartService: CartService) { }
+  @Input() grandTotal: number;
   ngOnInit() {
-    
+
   }
 
 }
