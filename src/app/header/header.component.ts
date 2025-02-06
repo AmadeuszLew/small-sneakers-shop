@@ -9,19 +9,19 @@ import { CartService } from '../cart/cart.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  private userSubscription:Subscription;
-  isAuthenticated=false;
-  totalItems:number=0;
+  private userSubscription: Subscription;
+  isAuthenticated = false;
+  totalItems = 0;
   constructor(private authService: AuthorizationService,
-              private cartService:CartService) { }
+              private cartService: CartService) { }
 
   ngOnInit() {
-    this.userSubscription=this.authService.user.subscribe(user=>{
-      this.isAuthenticated=!user? false:true;
+    this.userSubscription = this.authService.user.subscribe(user => {
+      this.isAuthenticated = !user ? false : true;
     });
-    this.cartService.productList.subscribe((sneaker)=>{
-      this.totalItems=sneaker.length;
-    })
+    this.cartService.productList.subscribe((sneaker) => {
+      this.totalItems = sneaker.length;
+    });
   }
   ngOnDestroy(): void {
     this.userSubscription.unsubscribe();
