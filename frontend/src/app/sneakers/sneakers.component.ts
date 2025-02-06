@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { trigger, transition, animate, style } from '@angular/animations';
 
@@ -38,9 +37,7 @@ export class SneakersComponent implements OnInit, OnDestroy {
   private sneakersChangeSubscription: Subscription;
   private mouseOver = false;
 
-  constructor(private sneakerService: SneakserService,
-              private router: Router,
-              private route: ActivatedRoute) {}
+  constructor(private sneakerService: SneakserService) {}
 
   ngOnInit() {
     this.sneakers = this.sneakerService.getAllSneakers();
@@ -51,18 +48,18 @@ export class SneakersComponent implements OnInit, OnDestroy {
         }
       );
   }
-  ngOnDestroy(): void {
+  ngOnDestroy(): void{
     this.sneakersChangeSubscription.unsubscribe();
   }
-  filterSnkrsByModel(model) {
+  filterSnkrsByModel(model){
     this.sneakerService.filterByModel(model);
   }
-  logIt() {
+  logIt(){
     console.log(this.sneakers);
   }
-  listSizes(sizes: SizeChart[]) {
+  listSizes(sizes: SizeChart[]){
     const showSizes: number[] = [];
-    for (const size of sizes) {
+    for (const size of sizes){
       if (size.avability > 0) {
         showSizes.push(size.size);
       }

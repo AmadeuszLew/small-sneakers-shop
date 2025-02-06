@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Sneaker } from '../sneakers/sneaker.model';
 import { CartService } from './cart.service';
 import { Product } from './product.model';
 
@@ -26,7 +25,7 @@ export class CartComponent implements OnInit {
     );
     console.log(this.products);
   }
-  ngOnDestroy(): void {
+  ngOnDestroy(): void{
     this.sneakerAddedSubscription.unsubscribe();
   }
 }

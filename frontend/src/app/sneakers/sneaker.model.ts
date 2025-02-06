@@ -10,7 +10,8 @@ export class Sneaker {
   public imagePath: string;
   public sizesAvailable: SizeChart[];
 
-  constructor(sku: string, model: string, name: string, brand: string, colorway: string, price: number, imagePath: string, sizesAvailable: SizeChart[]) {
+  constructor(sku: string, model: string, name: string, brand: string, colorway: string,
+              price: number, imagePath: string, sizesAvailable: SizeChart[]) {
     this.sku = sku;
     this.model = model;
     this.name = name;
