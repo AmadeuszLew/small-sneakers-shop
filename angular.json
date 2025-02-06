@@ -25,7 +25,7 @@
             "styles": [
               "src/styles.css",
               "node_modules/sweetalert2/src/sweetalert2.scss"
-              
+
             ],
             "scripts": [
               "./node_modules/@popperjs/core/dist/umd/popper.min.js",
@@ -43,7 +43,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -119,6 +118,6 @@
           }
         }
       }
-    }},
-  "defaultProject": "small-sneakers-shop"
+    }
+  }
 }
