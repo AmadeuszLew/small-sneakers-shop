@@ -61,18 +61,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "small-sneakers-shop:build"
+            "buildTarget": "small-sneakers-shop:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "small-sneakers-shop:build:production"
+              "buildTarget": "small-sneakers-shop:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "small-sneakers-shop:build"
+            "buildTarget": "small-sneakers-shop:build"
           }
         },
         "test": {
