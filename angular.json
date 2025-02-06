@@ -120,5 +120,8 @@
         }
       }
     }},
-  "defaultProject": "small-sneakers-shop"
+  "defaultProject": "small-sneakers-shop",
+  "cli": {
+    "analytics": "687dd832-6378-45cc-8769-efcb5bc28362"
+  }
 }
