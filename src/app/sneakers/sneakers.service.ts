@@ -1,7 +1,9 @@
 import { SizeChart } from "../shared/models/size-chart.model";
 import { Sneaker } from "./sneaker.model";
 import { BehaviorSubject , Subject} from 'rxjs';
+import { Injectable } from "@angular/core";
 
+@Injectable()
 export class SneakserService{
     sneakersChanged= new Subject<Sneaker[]>();
     private sneakers:Sneaker[]=[
