@@ -4,6 +4,7 @@ import { CartService } from '../../cart/cart.service';
 import { Product } from '../../cart/product.model';
 import { Sneaker } from '../sneaker.model';
 import { SneakserService } from '../sneakers.service';
+import {FormBuilder} from '@angular/forms';
 
 @Component({
   selector: 'app-sneaker-detail',
@@ -13,19 +14,17 @@ import { SneakserService } from '../sneakers.service';
 export class SneakerDetailComponent implements OnInit {
   sneaker: Sneaker;
   sizePicked = 0;
+
   constructor(private route: ActivatedRoute,
               private sneakerService: SneakserService,
-              private cartService: CartService) { }
+              private cartService: CartService
+  ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     const id = this.route.snapshot.params.id;
     this.sneaker = this.sneakerService.getSneaker(id);
-    console.log(this.sneaker);
-    console.log(this.sneakerService.getSneaker(id));
   }
-  addToCart(product: Sneaker){
-    console.log(this.sizePicked);
-    console.log(product);
+  addToCart(product: Sneaker): void{
     const addProduct = new Product(product.sku, product.model, product.name,
       product.brand, product.colorway, product.price, product.imagePath, this.sizePicked);
     this.cartService.addToCart(addProduct);

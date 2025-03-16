@@ -1,0 +1,10 @@
+<div class="card h-500" (mouseover)="mouseOver=true" (mouseout)="mouseOver=false" routerLink="/{{sneaker.sku}}">
+  <img class="card-img-top" src={{sneaker.imagePath}} alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">{{sneaker.brand}}</h5>
+    <p class="card-text overflow">{{sneaker.model+" "+sneaker.name}}</p>
+    <p class="card-text">{{sneaker.price}} zł</p>
+    <div>
+      <p  class="card-text">{{sizesAvailableInfo}} </p>
+    </div>
+</div>

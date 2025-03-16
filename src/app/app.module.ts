@@ -8,7 +8,6 @@ import { AuthorizationComponent } from './authorization/authorization.component'
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
-import { DataComponent } from './shared/data/data.component';
 import { UserComponent } from './user/user.component';
 import { AlertsService } from './shared/alerts.service';
 import { SneakersComponent } from './sneakers/sneakers.component';
@@ -17,13 +16,13 @@ import { SneakserService } from './sneakers/sneakers.service';
 import { CartComponent } from './cart/cart.component';
 import { CartItemComponent } from './cart/cart-item/cart-item.component';
 import { SumUpComponent } from './cart/sum-up/sum-up.component';
+import {SingleSneakerComponent} from './sneakers/single-sneaker/single-sneaker.component';
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     AuthorizationComponent,
     LoadingSpinnerComponent,
-    DataComponent,
     UserComponent,
     SneakersComponent,
     SneakerDetailComponent,
@@ -36,7 +35,8 @@ import { SumUpComponent } from './cart/sum-up/sum-up.component';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    SingleSneakerComponent
   ],
   providers: [AlertsService, SneakserService],
   bootstrap: [AppComponent]

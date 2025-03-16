@@ -19,39 +19,24 @@ export class AuthorizationComponent implements OnInit {
   }
   switchMode(){
     this.isLoginMode = !this.isLoginMode;
-    // console.log(this.isLoginMode);
   }
   onSubmit(form: NgForm){
-    if (!form.valid){// if user changes disabled button manualy
+    if (!form.valid){
       return;
     }
     const email = form.value.email;
     const password = form.value.password;
     this.isLoading = true;
 
-    let authorizationObs: Observable<AuthResponseData>; // to not repeat ourselfs in if/else
-
     if (this.isLoginMode){
-      console.log(this.isLoginMode);
-      authorizationObs = this.authorizationService.login(email, password);
+      this.authorizationService.login(email, password);
     }else{
-      console.log(this.isLoginMode);
-      authorizationObs = this.authorizationService.signup(email, password);
+      this.authorizationService.signup(email, password);
     }
+    this.isLoading = false;
+    this.router.navigate(['/']);
+    this.alertService.riseAlert('success', 'Zalogowano');
 
-
-    authorizationObs.subscribe(resData => {
-        console.log(resData);
-        this.isLoading = false;
-        this.router.navigate(['/']);
-        this.alertService.riseAlert('success', 'Zalogowano');
-      },
-      errorMessage => {
-        console.log(errorMessage);
-        this.error = errorMessage;
-        this.isLoading = false;
-      }
-    );
     form.reset();
   }
 }
