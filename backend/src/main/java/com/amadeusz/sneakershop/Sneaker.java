@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.util.List;
 @Data
 @Document
-public class Sneaker  {
+public class   Sneaker  {
     @Id
     private String id;
     @Indexed(unique = true)

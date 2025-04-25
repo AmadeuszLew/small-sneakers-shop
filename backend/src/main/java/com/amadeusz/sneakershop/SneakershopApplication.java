@@ -54,22 +54,30 @@ public class SneakershopApplication {
                     )
             );
 
-
+            repository.findSneakerBySku("555088-711").ifPresentOrElse(
+                    sneaker1 -> {
+                        System.out.println(sneaker1 + "found");
+                    },
+                    () -> {
+                        System.out.println("adding");
+                        repository.insert(sneaker);
+                    }
+            );
             //check if something exist
-            Query query = new Query();
-            query.addCriteria(Criteria.where("sku").is("555088-711"));
-
-            List<Sneaker> sneakers = mongoTemplate.find(query, Sneaker.class);
-            if (sneakers.size() > 1) {
-                throw new IllegalStateException("found duplicated shoes with sku" + "555088-711");
-            }
-
-            if (sneakers.isEmpty()) {
-                System.out.println("adding sneaker test");
-                repository.insert(sneaker);
-            } else{
-                System.out.println("sneaker exist already ");
-            }
+//            Query query = new Query();
+//            query.addCriteria(Criteria.where("sku").is("555088-711"));
+//
+//            List<Sneaker> sneakers = mongoTemplate.find(query, Sneaker.class);
+//            if (sneakers.size() > 1) {
+//                throw new IllegalStateException("found duplicated shoes with sku" + "555088-711");
+//            }
+//
+//            if (sneakers.isEmpty()) {
+//                System.out.println("adding sneaker test");
+//                repository.insert(sneaker);
+//            } else {
+//                System.out.println("sneaker exist already ");
+//            }
         };
 
     }
