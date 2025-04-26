@@ -1,6 +1,9 @@
 package com.amadeusz.sneakershop;
 
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,11 +16,12 @@ public class SneakerService {
 
     private final SneakerRepository sneakerRepository;
 
-    public List<Sneaker> getAllSneakers(){
-        return sneakerRepository.findAll();
-    }
-
     public Optional<Sneaker> getSneakerBySku(String sku) {
         return sneakerRepository.findSneakerBySku(sku);
+    }
+
+    public Page<Sneaker> getSneakersWithPagination(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return sneakerRepository.findAll(pageable);
     }
 }

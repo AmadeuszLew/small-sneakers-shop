@@ -12,15 +12,15 @@
             <h6 class="">{{sneaker.price}} PLN</h6>
               <select class="form-select" aria-label="Default select example" [(ngModel)]="sizePicked">
                 <option selected value=0 disabled>wybierz rozmiar</option>
-                <option *ngFor="let size of sneaker.sizesAvailable" 
-                value={{size.size}} 
+                <option *ngFor="let size of sneaker.sizesAvailable"
+                value={{size.size}}
                 [disabled]="true"
-                [disabled]="size.avability>0 ? false:true"
-                
-                >{{size.size}} {{size.avability>0 ? '':'- wyprzedany'}}</option>
+                [disabled]="size.availability>0 ? false:true"
+
+                >{{size.size}} {{size.availability>0 ? '':'- wyprzedany'}}</option>
               </select>
               <button class="btn btn-success mt-2 w-100 p-1 mt-3" [disabled]="sizePicked>=36 ? false:true" (click)="addToCart(sneaker)">dodaj do koszyka</button>
         </div>
-        
+
     </div>
 </div>

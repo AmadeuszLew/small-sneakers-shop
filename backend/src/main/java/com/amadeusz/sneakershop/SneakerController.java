@@ -1,10 +1,8 @@
 package com.amadeusz.sneakershop;
 
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,8 +14,11 @@ public class SneakerController {
     private final SneakerService sneakerService;
 
     @GetMapping
-    public List<Sneaker> getSneakers() {
-        return sneakerService.getAllSneakers();
+    public Page<Sneaker> getSneakers(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size
+    ) {
+        return sneakerService.getSneakersWithPagination(page, size);
     }
 
     @GetMapping("/{sku}")

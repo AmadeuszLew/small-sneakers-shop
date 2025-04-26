@@ -3,7 +3,7 @@
         <div class="col-md-3 col-sm-4 col-6 my-1" *ngFor="let item of sneakers">
             <div class="card h-500" routerLink="/{{item.sku}}">
                 <img class="card-img-top" src={{item.imagePath}} alt="Card image cap">
-                <!-- <div class="card-body" *ngIf="!mouseOver" [@fadeOut]> -->
+<!--                 <div class="card-body" *ngIf="!mouseOver" [@fadeOut]> -->
                 <div class="card-body">
                 <h5 class="card-title">{{item.brand}}</h5>
                     <p class="card-text overflow">{{item.model+" "+item.name}}</p>
@@ -14,6 +14,9 @@
                 </div>
         </div>
     </div>
-    <button (click)="filterSnkrsByModel('Yeezy 500')" class="my-2">show yeezy 500</button>
-    <button (click)="filterSnkrsByModel('')" class="my-2">show all</button>
+    <div class="pagination">
+      <button (click)="previousPage()" [disabled]="paginationInfo?.first">Poprzednia</button>
+      <span>Strona {{ paginationInfo?.pageable.pageNumber + 1 }} z {{ paginationInfo?.totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="paginationInfo?.last">Następna</button>
+    </div>
 </div>

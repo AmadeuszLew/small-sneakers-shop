@@ -1,11 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component,  OnInit } from '@angular/core';
 import { trigger, transition, animate, style } from '@angular/animations';
 
 import { SizeChart } from '../shared/models/size-chart.model';
 import { Sneaker } from './sneaker.model';
-import { SneakserService } from './sneakers.service';
-import {AppRestService} from '../app.rest.service';
+import {AppRestService} from '../app-rest/app.rest.service';
+import {Pagination} from '../app-rest/pagination.model';
 
 @Component({
   selector: 'app-sneakers',
@@ -24,35 +23,50 @@ import {AppRestService} from '../app.rest.service';
     ]),
   ],
 })
-export class SneakersComponent implements OnInit, OnDestroy {
-  sneakers: Sneaker[];
-  private sneakersChangeSubscription: Subscription;
+export class SneakersComponent implements OnInit {
+  sneakers: Sneaker[] = [];
+  paginationInfo: Pagination<Sneaker>;
+  currentPage: number = 0;
+  pageSize: number = 10;
 
-  constructor(private sneakerService: SneakserService, private readonly appRestService: AppRestService) {}
+  constructor(private readonly appRestService: AppRestService) {}
 
   ngOnInit() {
-    this.appRestService.getAllSneakers()
-      .subscribe((sneakers:Sneaker[]): void=>
-      {
-        this.sneakers = sneakers;}
-      );
+    this.loadSneakers(this.currentPage, this.pageSize);
   }
-  ngOnDestroy(): void{
-    this.sneakersChangeSubscription.unsubscribe();
+
+  loadSneakers(page: number, size: number): void {
+    this.appRestService.getAllSneakers(page, size).subscribe({
+      next: (pagination: Pagination<Sneaker>) => {
+        this.paginationInfo = pagination;
+        this.sneakers = pagination.content;
+      },
+      error: error => console.error('Error while loading snkrs sneakers:', error),
+    });
   }
-  filterSnkrsByModel(model){
-    this.sneakerService.filterByModel(model);
-  }
-  listSizes(sizes: SizeChart[]){
+  listSizes(sizes: SizeChart[]) {
     const showSizes: number[] = [];
-    if(!sizes){
+    if (!sizes) {
       return 'Niedostepny';
     }
-    for (const size of sizes){
-      if (size.avability > 0) {
+    for (const size of sizes) {
+      if (size.availability > 0) {
         showSizes.push(size.size);
       }
     }
-    return showSizes.length > 3 ? 'Dostępny w wielu rozmiarach' : 'Dostępne rozmiary: ' + showSizes ;
+    return showSizes.length > 3 ? 'Dostępny w wielu rozmiarach' : 'Dostępne rozmiary: ' + showSizes;
+  }
+
+  nextPage(): void {
+    if (this.paginationInfo && !this.paginationInfo.last) {
+      this.currentPage++;
+      this.loadSneakers(this.currentPage, this.pageSize);
+    }
+  }
+  previousPage(): void {
+    if (this.paginationInfo && !this.paginationInfo.first) {
+      this.currentPage--;
+      this.loadSneakers(this.currentPage, this.pageSize);
+    }
   }
 }
