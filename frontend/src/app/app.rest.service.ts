@@ -1,11 +1,11 @@
-import {HttpClient} from "@angular/common/http";
-import {inject, Injectable} from "@angular/core";
-import {Observable} from "rxjs";
-import {Sneaker} from "./sneakers/sneaker.model";
-import {environment} from "../environments/environment.local";
+import {HttpClient} from '@angular/common/http';
+import {inject, Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {Sneaker} from './sneakers/sneaker.model';
+import {environment} from '../environments/environment.local';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AppRestService {
   http:HttpClient = inject(HttpClient);

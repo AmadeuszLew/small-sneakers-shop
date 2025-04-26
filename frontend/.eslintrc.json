@@ -1,0 +1,72 @@
+{
+  "root": true,
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "parserOptions": {
+        "project": ["tsconfig.json"], // Plik TS konfiguracji
+        "sourceType": "module"
+      },
+      "extends": [
+        "eslint:recommended", // Ogólne reguły ESLint
+        "plugin:@typescript-eslint/recommended", // Reguły specyficzne dla TypeScript
+        "plugin:@angular-eslint/recommended" // Reguły specyficzne dla Angular
+      ],
+      "rules": {
+        // ----- Ogólne reguły stylu kodu -----
+        "quotes": ["error", "single"], // Stosowanie pojedynczych cudzysłowów (np. 'tekst')
+        "semi": ["error", "always"], // Wymuszanie średników
+        "comma-dangle": ["error", "always-multiline"], // Przecinek na końcu obiektów wielowierszowych
+        "eol-last": ["error", "always"], // Nowa linia na końcu pliku
+        "no-trailing-spaces": "error", // Brak spacji na końcu linii
+        "indent": ["error", 2], // Wcięcie na 2 spacje (możesz zmienić na 4)
+        "no-console": ["warn", { "allow": ["warn", "error"] }], // Ograniczenie console.log (tylko warn i error)
+        "prefer-const": "error", // Preferowanie `const` zamiast `let`, gdy to możliwe
+        "curly": ["error", "all"], // Klauzule warunkowe mają być w klamrach (np. `if {}`)
+        "arrow-parens": ["error", "as-needed"], // Pomija nawiasy wokół jednego parametru w funkcjach strzałkowych
+
+        // ----- Reguły dla TypeScript -----
+        "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }], // Ignoruj niewykorzystane zmienne zaczynające się od `_`
+        "@typescript-eslint/explicit-module-boundary-types": "off", // Nie wymuszaj typów w funkcjach eksportowanych
+        "@typescript-eslint/no-explicit-any": "warn",
+
+        // ----- Reguły dla Angular -----
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "prefix": "app", // Prefix komponentów (np. app-my-component)
+            "style": "kebab-case" // Wymuszaj `kebab-case`
+          }
+        ],
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "prefix": "app", // Prefix dyrektyw (np. [appMyDirective])
+            "style": "camelCase" // Stosuj camelCase
+          }
+        ],
+        "@angular-eslint/use-lifecycle-interface": "warn", // Ostrzega, jeśli brakuje interfejsu cyklu życia (ngOnInit)
+
+        // ----- Best practices -----
+        "eqeqeq": ["error", "always"], // Wymuszaj używanie `===` zamiast `==`
+        "no-fallthrough": "error", // Brak upadków z case do case w switch
+        "radix": "error" // Każde `parseInt` musi mieć podstawę (np. `parseInt(x, 10)`)
+      }
+    },
+    {
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended"], // Reguły dla Angular HTML
+      "rules": {
+        "@angular-eslint/template/cyclomatic-complexity": [
+          "warn",
+          {
+            "maxComplexity": 5
+          }
+        ],
+        "@angular-eslint/template/no-negated-async": "error" // Nie używaj negacji (`!`) w `async` bindingach
+      }
+    }
+  ]
+}

@@ -29,16 +29,16 @@ import { SumUpComponent } from './cart/sum-up/sum-up.component';
     SneakerDetailComponent,
     CartComponent,
     CartItemComponent,
-    SumUpComponent
+    SumUpComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   providers: [AlertsService, SneakserService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

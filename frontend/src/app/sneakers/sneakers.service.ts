@@ -1,6 +1,6 @@
 import {SizeChart} from '../shared/models/size-chart.model';
 import {Sneaker} from './sneaker.model';
-import {BehaviorSubject, Subject} from 'rxjs';
+import { Subject} from 'rxjs';
 
 export class SneakserService {
   sneakersChanged = new Subject<Sneaker[]>();
@@ -260,7 +260,7 @@ export class SneakserService {
         new SizeChart(45.5, 0),
         new SizeChart(46, 1),
       ]
-    )
+    ),
   ];
 
   getAllSneakers() {
@@ -277,7 +277,7 @@ export class SneakserService {
   }
 
   filterByModel(model: string) {
-    const snkrs = this.sneakers.filter((snkrs) => {
+    const snkrs = this.sneakers.filter(snkrs => {
       return snkrs.model.includes(model);
     });
     // this.sneakers=snkrs; // wtf ja tu robilem XD
@@ -285,7 +285,7 @@ export class SneakserService {
   }
 
   filterByBrand(brand: string):void {
-    const filteredSnkrs:Sneaker[] = this.sneakers.filter((snkrs) => {
+    const filteredSnkrs:Sneaker[] = this.sneakers.filter(snkrs => {
       return snkrs.brand.includes(brand);
     });
     this.sneakersChanged.next(filteredSnkrs);

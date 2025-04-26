@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import Swal from 'sweetalert2';
+import Swal, {SweetAlertIcon} from 'sweetalert2';
 
-// Injectable({providedIn:'root'})
+Injectable({providedIn:'root'});
 export class AlertsService {
-  riseAlert(icon: any, title: any) {
+  riseAlert(icon: SweetAlertIcon, title: string) {
     Swal.fire({
       position: 'top-end',
       icon,
       title,
       showConfirmButton: false,
-      timer: 1500
+      timer: 1500,
     });
   }
 }
