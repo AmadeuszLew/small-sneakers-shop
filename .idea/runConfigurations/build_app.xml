@@ -1,11 +1,7 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="run server" type="js.build_tools.npm">
+  <configuration default="false" name="build app" type="js.build_tools.npm">
     <package-json value="$PROJECT_DIR$/frontend/package.json" />
-    <command value="run" />
-    <scripts>
-      <script value="ng" />
-      <script value="serve" />
-    </scripts>
+    <command value="build" />
     <node-interpreter value="project" />
     <envs />
     <method v="2" />

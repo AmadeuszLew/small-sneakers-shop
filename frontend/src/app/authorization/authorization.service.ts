@@ -4,7 +4,6 @@ import { catchError, tap } from 'rxjs/operators';
 import { BehaviorSubject, Subject, throwError} from 'rxjs'; //
 import { User } from './user.model';
 import { Router } from '@angular/router';
-import { environment } from '../../environments/environment';
 export interface AuthResponseData {
     idToken: string;
     email: string;
@@ -21,33 +20,11 @@ export class AuthorizationService {
     private timer: any;
     constructor(private http: HttpClient, private router: Router) {}
     signup(email: string, password: string, ) {// http client doest nothing without subscribing, so lets return this prepared observable (it makes more sense cuz if we get an error message, we might wanna display it)
-        return this.http
-        .post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + environment.apiKey,
-        {
-            email,
-            password,
-            returnSecureToken: true
-        })
-        .pipe(catchError(this.handleError),
-        tap(resData => {// tap alows to preform some action, without changing the response
-                this.handleAuthentication(resData.email, resData.idToken, +resData.expireIn, resData.localid);
-            })
-        );
+
     }
 
     login(email: string, password: string) {
-        return this.http.post<AuthResponseData>(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + environment.apiKey,
-        {
-            email,
-            password,
-            returnSecureToken: true
-        })
-        .pipe(catchError(this.handleError),
-        tap(resData => {// tap alows to preform some action, without changing the response
-            this.handleAuthentication(resData.email, resData.idToken, +resData.expireIn, resData.localid);
-            })
-        );
+
     }
     logout() {
         this.user.next(null);
