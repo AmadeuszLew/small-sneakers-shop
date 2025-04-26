@@ -33,10 +33,10 @@ export class AuthorizationComponent implements OnInit {
 
     if (this.isLoginMode) {
       console.log(this.isLoginMode);
-      authorizationObs = this.authorizationService.login(email, password);
+      // authorizationObs = this.authorizationService.login(email, password);
     } else {
       console.log(this.isLoginMode);
-      authorizationObs = this.authorizationService.signup(email, password);
+      // authorizationObs = this.authorizationService.signup(email, password);
     }
 
 
