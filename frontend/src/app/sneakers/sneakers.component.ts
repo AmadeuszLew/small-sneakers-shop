@@ -5,6 +5,7 @@ import { trigger, transition, animate, style } from '@angular/animations';
 import { SizeChart } from '../shared/models/size-chart.model';
 import { Sneaker } from './sneaker.model';
 import { SneakserService } from './sneakers.service';
+import {AppRestService} from "../app.rest.service";
 
 @Component({
   selector: 'app-sneakers',
@@ -37,15 +38,14 @@ export class SneakersComponent implements OnInit, OnDestroy {
   private sneakersChangeSubscription: Subscription;
   private mouseOver = false;
 
-  constructor(private sneakerService: SneakserService) {}
+  constructor(private sneakerService: SneakserService, private readonly appRestService: AppRestService) {}
 
   ngOnInit() {
-    this.sneakers = this.sneakerService.getAllSneakers();
-    this.sneakersChangeSubscription = this.sneakerService.sneakersChanged
-      .subscribe(
-        (sneakers: Sneaker[]) => {
-          this.sneakers = sneakers;
-        }
+    debugger;''
+    this.appRestService.getAllSneakers()
+      .subscribe((sneakers:Sneaker[]):void=>
+      {debugger;
+        this.sneakers = sneakers}
       );
   }
   ngOnDestroy(): void{
@@ -59,6 +59,9 @@ export class SneakersComponent implements OnInit, OnDestroy {
   }
   listSizes(sizes: SizeChart[]){
     const showSizes: number[] = [];
+    if(!sizes){
+      return "Niedostepny"
+    }
     for (const size of sizes){
       if (size.avability > 0) {
         showSizes.push(size.size);
