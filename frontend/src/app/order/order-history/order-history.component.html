@@ -1,0 +1,71 @@
+<div class="container mt-4">
+  <h2>Moje zamówienia</h2>
+  
+  <div *ngIf="loading" class="text-center">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+    <button class="btn btn-sm btn-outline-danger ml-2" (click)="loadOrders()">
+      Spróbuj ponownie
+    </button>
+  </div>
+
+  <div *ngIf="!loading && !error && orders.length === 0" class="alert alert-info">
+    Nie masz jeszcze żadnych zamówień.
+  </div>
+
+  <div *ngIf="!loading && !error && orders.length > 0">
+    <div class="row">
+      <div class="col-12" *ngFor="let order of orders">
+        <div class="card mb-3">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <div>
+              <strong>Zamówienie #{{ order.orderNumber }}</strong>
+              <small class="text-muted ml-2">{{ formatDate(order.orderDate) }}</small>
+            </div>
+            <span class="badge" [class]="getStatusBadgeClass(order.status)">
+              {{ order.status }}
+            </span>
+          </div>
+          
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-8">
+                <h6>Produkty:</h6>
+                <div *ngFor="let item of order.items" class="d-flex align-items-center mb-2">
+                  <img [src]="item.imagePath" [alt]="item.sneakerName" 
+                       class="img-thumbnail me-3" style="width: 60px; height: 60px; object-fit: cover;">
+                  <div>
+                    <div class="fw-bold">{{ item.sneakerName }}</div>
+                    <small class="text-muted">
+                      Rozmiar: {{ item.size }} | Ilość: {{ item.quantity }} | 
+                      Cena: {{ item.price }} PLN
+                    </small>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-4 text-md-end">
+                <div class="mb-2">
+                  <strong>Adres dostawy:</strong><br>
+                  <small>{{ order.shippingAddress }}</small>
+                </div>
+                <div class="mb-2">
+                  <strong>Odbiorca:</strong><br>
+                  <small>{{ order.customerName }}</small>
+                </div>
+                <div class="h5 text-primary">
+                  <strong>Suma: {{ order.totalAmount }} PLN</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

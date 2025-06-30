@@ -13,10 +13,14 @@ import { UserComponent } from './user/user.component';
 import { AlertsService } from './shared/alerts.service';
 import { SneakersComponent } from './sneakers/sneakers.component';
 import { SneakerDetailComponent } from './sneakers/sneaker-detail/sneaker-detail.component';
-import { SneakserService } from './sneakers/sneakers.service';
+import { SneakersService } from './sneakers/sneakers.service';
 import { CartComponent } from './cart/cart.component';
 import { CartItemComponent } from './cart/cart-item/cart-item.component';
 import { SumUpComponent } from './cart/sum-up/sum-up.component';
+import { CheckoutComponent } from './cart/checkout/checkout.component';
+import { OrderHistoryComponent } from './order/order-history/order-history.component';
+import { OrderConfirmationComponent } from './order-confirmation/order-confirmation.component';
+import { OrderService } from './order/order.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +33,10 @@ import { SumUpComponent } from './cart/sum-up/sum-up.component';
     SneakerDetailComponent,
     CartComponent,
     CartItemComponent,
-    SumUpComponent
+    SumUpComponent,
+    CheckoutComponent,
+    OrderHistoryComponent,
+    OrderConfirmationComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +45,7 @@ import { SumUpComponent } from './cart/sum-up/sum-up.component';
     HttpClientModule,
     BrowserAnimationsModule
   ],
-  providers: [AlertsService, SneakserService],
+  providers: [AlertsService, SneakersService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

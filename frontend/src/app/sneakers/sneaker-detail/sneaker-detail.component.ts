@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CartService } from '../../cart/cart.service';
 import { Product } from '../../cart/product.model';
 import { Sneaker } from '../sneaker.model';
-import { SneakserService } from '../sneakers.service';
+import { SneakersService } from '../sneakers.service';
 
 @Component({
   selector: 'app-sneaker-detail',
@@ -12,16 +12,20 @@ import { SneakserService } from '../sneakers.service';
 })
 export class SneakerDetailComponent implements OnInit {
   sneaker: Sneaker;
-  sizePicked = 0;
-  constructor(private route: ActivatedRoute,
-              private sneakerService: SneakserService,
+  sizePicked = 0;  constructor(private route: ActivatedRoute,
+              private sneakerService: SneakersService,
               private cartService: CartService) { }
-
   ngOnInit() {
     const id = this.route.snapshot.params.id;
-    this.sneaker = this.sneakerService.getSneaker(id);
-    console.log(this.sneaker);
-    console.log(this.sneakerService.getSneaker(id));
+    this.sneakerService.getSneakerObservable(id).subscribe({
+      next: (sneaker) => {
+        this.sneaker = sneaker;
+        console.log(this.sneaker);
+      },
+      error: (error) => {
+        console.error('Error loading sneaker:', error);
+      }
+    });
   }
   addToCart(product: Sneaker) {
     console.log(this.sizePicked);

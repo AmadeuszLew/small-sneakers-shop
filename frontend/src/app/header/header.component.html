@@ -6,19 +6,37 @@
         <a class="navbar-brand text-light" routerLink="/">
             <img src="assets/img/logo.png" alt="Logo" width="80" height="50"  >
         </a>
-        
-        <div class="navbar-nav text-center">
+          <div class="navbar-nav text-center">
             <form class="d-flex " role="search">
                 <input class="form-control" type="search" placeholder="Szukaj" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit"> <i class="bi bi-search"></i></button>
             </form>
-            <a routerLink="/user" *ngIf="isAuthenticated">
-                <i class="bi bi-person-check text-dark  mt-1 p-1 d-none d-sm-block"></i></a>
+            
+            <!-- User menu for authenticated users -->
+            <div class="dropdown" *ngIf="isAuthenticated">
+                <a class="nav-link dropdown-toggle text-dark p-1 d-none d-sm-block" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-person-check"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" routerLink="/user"><i class="bi bi-person me-2"></i>Profil</a></li>
+                    <li><a class="dropdown-item" routerLink="/order-history"><i class="bi bi-clock-history me-2"></i>Moje zamówienia</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" (click)="logout()"><i class="bi bi-box-arrow-right me-2"></i>Wyloguj</a></li>
+                </ul>
+            </div>
+            
+            <!-- Login link for unauthenticated users -->
             <a routerLink="/authorization" *ngIf="!isAuthenticated">
-                <i class="bi bi-person-plus text-dark  mt-1 p-1 d-none d-sm-block"></i></a>
+                <i class="bi bi-person-plus text-dark  mt-1 p-1 d-none d-sm-block"></i>
+            </a>
 
-            <i class="bi bi-cart text-dark mt-2 d-none d-sm-block"  routerLink="/cart"><span *ngIf="totalItems>0">{{totalItems}}</span></i>
-
+            <!-- Cart with item count -->
+            <a class="position-relative" routerLink="/cart">
+                <i class="bi bi-cart text-dark mt-2 d-none d-sm-block"></i>
+                <span *ngIf="totalItems > 0" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {{totalItems}}
+                </span>
+            </a>
         </div>
     </div>
   </nav>

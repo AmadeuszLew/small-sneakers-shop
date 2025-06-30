@@ -4,7 +4,7 @@ import { trigger, transition, animate, style } from '@angular/animations';
 
 import { SizeChart } from '../shared/models/size-chart.model';
 import { Sneaker } from './sneaker.model';
-import { SneakserService } from './sneakers.service';
+import { SneakersService } from './sneakers.service';
 
 @Component({
   selector: 'app-sneakers',
@@ -37,7 +37,7 @@ export class SneakersComponent implements OnInit, OnDestroy {
   private sneakersChangeSubscription: Subscription;
   private mouseOver = false;
 
-  constructor(private sneakerService: SneakserService) {}
+  constructor(private sneakerService: SneakersService) {}
 
   ngOnInit() {
     this.sneakers = this.sneakerService.getAllSneakers();

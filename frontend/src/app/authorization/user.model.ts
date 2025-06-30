@@ -3,13 +3,19 @@ export class User {
         public email: string,
         public id: string,
         private _token: string,
-        private _tokenExpirationDate: Date
+        private _tokenExpirationDate: Date,
+        public firstName?: string,
+        public lastName?: string
         ) {}
 
-    get token() {// ggetter is a property that can run some code when u try to acces this prop//not a setter
+    get token() {
         if (!this._tokenExpirationDate || new Date() > this._tokenExpirationDate) {
             return null;
         }
         return this._token;
+    }
+
+    get fullName() {
+        return `${this.firstName || ''} ${this.lastName || ''}`.trim();
     }
 }

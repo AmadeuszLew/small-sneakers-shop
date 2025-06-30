@@ -1,0 +1,23 @@
+[
+    // GitLens keybindings for IntelliJ-style blame functionality
+    {
+        "key": "alt+shift+b",
+        "command": "gitlens.toggleFileBlame",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+alt+g",
+        "command": "gitlens.showQuickCommitDetails",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+alt+h",
+        "command": "gitlens.showQuickFileHistory",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+alt+r",
+        "command": "gitlens.showQuickRepoHistory",
+        "when": "editorTextFocus"
+    }
+]

@@ -3,6 +3,12 @@
     <span>wartość produktów {{grandTotal}} PLN<br/></span>
     <span>dostawa 15 PLN</span>
     <br>
-    <span class="font-weight-bold">Łącznie do zapłaty (w tym VAT):<br/>{{grandTotal+15}} PLN</span>
-    <button class="btn btn-success container-fluid">PRZEJDZ DO ZAMÓWIENIA</button>
+    <span class="font-weight-bold">Łącznie do zapłaty (w tym VAT):<br/>{{getTotalWithShipping()}} PLN</span>
+    <button 
+        class="btn btn-success container-fluid" 
+        (click)="proceedToCheckout()"
+        [disabled]="isLoading">
+        <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
+        PRZEJDZ DO ZAMÓWIENIA
+    </button>
 </div>

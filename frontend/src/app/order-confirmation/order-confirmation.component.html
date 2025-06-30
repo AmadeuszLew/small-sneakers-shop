@@ -1,0 +1,115 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      
+      <!-- Loading State -->
+      <div *ngIf="loading" class="text-center">
+        <div class="spinner-border text-primary" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+        <p class="mt-2">Ładowanie szczegółów zamówienia...</p>
+      </div>
+
+      <!-- Error State -->
+      <div *ngIf="error && !loading" class="alert alert-danger">
+        <h4>Wystąpił błąd</h4>
+        <p>{{ error }}</p>
+        <button class="btn btn-primary" (click)="continueShopping()">
+          Powrót do sklepu
+        </button>
+      </div>
+
+      <!-- Success State -->
+      <div *ngIf="order && !loading" class="text-center">
+        
+        <!-- Success Icon -->
+        <div class="mb-4">
+          <div class="bg-success rounded-circle d-inline-flex align-items-center justify-content-center" 
+               style="width: 80px; height: 80px;">
+            <i class="bi bi-check-lg text-white" style="font-size: 2.5rem;"></i>
+          </div>
+        </div>
+
+        <h1 class="text-success mb-3">Zamówienie zostało złożone!</h1>
+        <p class="lead">Dziękujemy za zakupy. Twoje zamówienie zostało przyjęte do realizacji.</p>
+
+        <!-- Order Details Card -->
+        <div class="card mt-4 text-start">
+          <div class="card-header">
+            <h5 class="mb-0">Szczegóły zamówienia</h5>
+          </div>
+          <div class="card-body">
+            <div class="row mb-3">
+              <div class="col-sm-4"><strong>Numer zamówienia:</strong></div>
+              <div class="col-sm-8">{{ order.orderNumber }}</div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-4"><strong>Data zamówienia:</strong></div>
+              <div class="col-sm-8">{{ formatDate(order.orderDate) }}</div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-4"><strong>Status:</strong></div>
+              <div class="col-sm-8">
+                <span class="badge bg-warning">{{ order.status }}</span>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-4"><strong>Odbiorca:</strong></div>
+              <div class="col-sm-8">{{ order.customerName }}</div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-4"><strong>Adres dostawy:</strong></div>
+              <div class="col-sm-8">{{ order.shippingAddress }}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ordered Items -->
+        <div class="card mt-4 text-start">
+          <div class="card-header">
+            <h5 class="mb-0">Zamówione produkty</h5>
+          </div>
+          <div class="card-body">
+            <div *ngFor="let item of order.items" class="d-flex align-items-center mb-3 border-bottom pb-3">
+              <img [src]="item.imagePath" [alt]="item.sneakerName" 
+                   class="img-thumbnail me-3" style="width: 80px; height: 80px; object-fit: cover;">
+              <div class="flex-grow-1">
+                <div class="fw-bold">{{ item.sneakerName }}</div>
+                <div class="text-muted">Rozmiar: {{ item.size }}</div>
+                <div class="text-muted">Ilość: {{ item.quantity }}</div>
+              </div>
+              <div class="text-end">
+                <div class="fw-bold">{{ item.price * item.quantity }} PLN</div>
+              </div>
+            </div>
+            
+            <div class="text-end mt-3">
+              <h5 class="text-primary">Łączna kwota: {{ order.totalAmount }} PLN</h5>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="mt-4">
+          <button class="btn btn-primary me-3" (click)="continueShopping()">
+            Kontynuuj zakupy
+          </button>
+          <button class="btn btn-outline-primary" (click)="viewOrderHistory()">
+            Zobacz historię zamówień
+          </button>
+        </div>
+
+        <!-- Additional Info -->
+        <div class="alert alert-info mt-4">
+          <h6>Co dalej?</h6>
+          <ul class="mb-0 text-start">
+            <li>Otrzymasz e-mail z potwierdzeniem zamówienia</li>
+            <li>Zamówienie zostanie przygotowane w ciągu 1-2 dni roboczych</li>
+            <li>Po wysłaniu otrzymasz numer śledzenia przesyłki</li>
+            <li>Możesz śledzić status zamówienia w sekcji "Moje zamówienia"</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthorizationService } from '../authorization/authorization.service';
 import { CartService } from '../cart/cart.service';
@@ -12,8 +13,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private userSubscription: Subscription;
   isAuthenticated = false;
   totalItems = 0;
-  constructor(private authService: AuthorizationService,
-              private cartService: CartService) { }
+  
+  constructor(
+    private authService: AuthorizationService,
+    private cartService: CartService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.userSubscription = this.authService.user.subscribe(user => {
@@ -23,7 +28,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.totalItems = sneaker.length;
     });
   }
+  
   ngOnDestroy(): void {
     this.userSubscription.unsubscribe();
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/']);
   }
 }

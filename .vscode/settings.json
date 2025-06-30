@@ -1,0 +1,55 @@
+{
+    "java.compile.nullAnalysis.mode": "automatic",
+    "java.configuration.updateBuildConfiguration": "interactive",
+    
+    // GitLens Configuration for IntelliJ-style blame annotations
+    "gitlens.currentLine.enabled": true,
+    "gitlens.currentLine.pullRequests.enabled": false,
+    "gitlens.currentLine.format": "${author}, ${agoOrDate}${' via 'pullRequest}${' • 'message}",
+    "gitlens.currentLine.scrollable": false,
+    
+    // Code Lens for blame info on functions/classes
+    "gitlens.codeLens.enabled": true,
+    "gitlens.codeLens.authors.enabled": true,
+    "gitlens.codeLens.recentChange.enabled": true,
+    
+    // Inline blame annotations (most similar to IntelliJ)
+    "gitlens.blame.format": "${author|10} ${agoOrDate|14-}",
+    "gitlens.blame.highlight.enabled": true,
+    "gitlens.blame.highlight.locations": [
+        "gutter",
+        "line",
+        "overview"
+    ],
+    "gitlens.blame.avatars": false,
+    "gitlens.blame.compact": false,
+    "gitlens.blame.dateFormat": "MM/dd/yyyy",
+    "gitlens.blame.heatmap.enabled": true,
+    "gitlens.blame.ignoreWhitespace": false,
+    
+    // Toggle blame annotations with keyboard shortcut
+    "gitlens.modes": {
+        "zen": {
+            "name": "Zen",
+            "statusBarItemName": "Zen",
+            "description": "for a zen-like experience, disables many visual features",
+            "codeLens": false,
+            "currentLine": false,
+            "hovers": false
+        },
+        "review": {
+            "name": "Review",
+            "statusBarItemName": "Reviewing",
+            "description": "for reviewing code",
+            "codeLens": true,
+            "currentLine": true,
+            "hovers": true
+        }
+    },
+    
+    // Status bar integration
+    "gitlens.statusBar.enabled": true,
+    "gitlens.statusBar.alignment": "right",
+    "gitlens.statusBar.format": "${author}, ${agoOrDate}",
+    "gitlens.statusBar.command": "gitlens.showQuickCommitDetails"
+}
