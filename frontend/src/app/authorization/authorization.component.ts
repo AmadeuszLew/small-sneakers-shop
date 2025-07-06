@@ -14,6 +14,7 @@ export class AuthorizationComponent implements OnInit {
   isLoginMode = true;
   isLoading = false;
   error: string = null;
+  showPassword = false;
   
   constructor(
     private authorizationService: AuthorizationService, 
@@ -26,7 +27,11 @@ export class AuthorizationComponent implements OnInit {
   
   switchMode() {
     this.isLoginMode = !this.isLoginMode;
-    this.error = null; // Clear any existing errors
+    this.error = null;
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
   
   onSubmit(form: NgForm) {

@@ -85,7 +85,8 @@ export class AuthorizationService {
             userData._token,
             new Date(userData._tokenExpirationDate),
             userData.firstName,
-            userData.lastName
+            userData.lastName,
+            userData.createdAt
         );
         if (loadUser.token) {
             this.user.next(loadUser);

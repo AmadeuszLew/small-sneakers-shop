@@ -1,24 +1,61 @@
-.list-item ::before {  
-    transform: scaleX(0);
-    transform-origin: bottom right;
+.list-item {
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 1rem;
+  margin: 0.5rem 0;
+}
+
+.list-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15) !important;
+}
+
+.list-item::before {  
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background-color: rgba(188, 190, 191, 0.1);
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.3s ease;
+}
+
+.list-item:hover::before {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.card {
+  border: none;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.display-4 {
+  font-size: 3rem;
+}
+
+.btn {
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .list-item h5 {
+    font-size: 1rem;
   }
   
-  .list-item :hover::before {
-    transform: scaleX(1);
-    transform-origin: bottom left;
+  .display-4 {
+    font-size: 2rem;
   }
-  
-  .list-item ::before {
-    content: " ";
-    display: block;
-    position: absolute;
-    top: 4; right: 4; bottom: 4; left: 4;
-    inset: 0 0 0 0;
-    background-color: rgb(188, 190, 191);
-    z-index: -1;
-    transition: transform .3s ease;
-  }
-  .list-item  {
-    position: relative;
-    
-  }
+}
