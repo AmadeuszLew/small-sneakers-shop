@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { BehaviorSubject, throwError} from 'rxjs';
-import { User } from './user.model';
+import { Address, User } from './user.model';
 import { Router } from '@angular/router';
 
 export interface AuthResponseData {
@@ -11,6 +11,7 @@ export interface AuthResponseData {
     firstName: string;
     lastName: string;
     userId: string;
+    addresses?: Address[];
 }
 
 export interface RegisterData {
@@ -20,6 +21,7 @@ export interface RegisterData {
     lastName: string;
     address?: string;
     phoneNumber?: string;
+    addresses?: Address[];
 }
 
 @Injectable({providedIn: 'root'})

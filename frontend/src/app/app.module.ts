@@ -20,7 +20,7 @@ import { SumUpComponent } from './cart/sum-up/sum-up.component';
 import { CheckoutComponent } from './cart/checkout/checkout.component';
 import { OrderHistoryComponent } from './order/order-history/order-history.component';
 import { OrderConfirmationComponent } from './order-confirmation/order-confirmation.component';
-import { OrderService } from './order/order.service';
+import { AddressManagementComponent } from './user/Addresses/address-management/address-management.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +43,8 @@ import { OrderService } from './order/order.service';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AddressManagementComponent
   ],
   providers: [AlertsService, SneakersService],
   bootstrap: [AppComponent]

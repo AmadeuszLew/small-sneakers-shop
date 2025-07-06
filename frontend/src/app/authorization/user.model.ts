@@ -6,8 +6,9 @@ export class User {
         private _tokenExpirationDate: Date,
         public firstName?: string,
         public lastName?: string,
-        public createdAt?: Date
-        ) {}
+        public createdAt?: Date,
+        public addresses?: Address[]
+    ) {}
 
     get token() {
         if (!this._tokenExpirationDate || new Date() > this._tokenExpirationDate) {
@@ -19,4 +20,17 @@ export class User {
     get fullName() {
         return `${this.firstName || ''} ${this.lastName || ''}`.trim();
     }
+
+    get mainAddress(): Address | undefined {
+        return this.addresses?.find(addr => addr.main);
+    }
+}
+
+export interface Address {
+    street: string;
+    postcode: string;
+    city: string;
+    country: string;
+    phoneNumber: string;
+    main: boolean;
 }

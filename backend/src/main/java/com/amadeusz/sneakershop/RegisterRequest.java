@@ -5,6 +5,7 @@ import lombok.Data;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import java.util.List;
 
 @Data
 public class RegisterRequest {
@@ -22,6 +23,6 @@ public class RegisterRequest {
     @NotBlank
     private String lastName;
     
-    private String address;
     private String phoneNumber;
+    private List<Address> addresses;
 }

@@ -14,7 +14,8 @@ export class UserComponent implements OnInit {
   recentOrders: Order[] = [];
   totalOrders = 0;
   isLoading = false;
-  
+  activeSection = 'account';
+
   constructor(
     private alertService: AlertsService, 
     private authService: AuthorizationService,
@@ -28,7 +29,6 @@ export class UserComponent implements OnInit {
   }
 
   loadUserData() {
-  // Get user data from auth service
   this.authService.user.subscribe(userData => {
     console.log('User data from auth service:', userData); // Debug line
     this.user = userData;
@@ -49,6 +49,11 @@ export class UserComponent implements OnInit {
         this.isLoading = false;
       }
     });
+  }
+
+  setActiveSection(section: string): void {
+    this.activeSection = section;
+    console.log('activeSection set to ', section, this.activeSection)
   }
 
   navigateToOrders() {
