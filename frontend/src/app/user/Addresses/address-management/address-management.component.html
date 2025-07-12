@@ -1,0 +1,205 @@
+
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4>Zarządzanie adresami</h4>
+        <button 
+          class="btn btn-primary" 
+          (click)="onAddNewAddress()"
+          [disabled]="isAddingNew || editingIndex !== null">
+          <i class="bi bi-plus-circle"></i> Dodaj nowy adres
+        </button>
+      </div>
+
+      <!-- Error Alert -->
+      <div *ngIf="error" class="alert alert-danger">
+        {{ error }}
+      </div>
+
+      <!-- Add/Edit Address Form -->
+      <div *ngIf="isAddingNew || editingIndex !== null" class="card mb-4">
+        <div class="card-header">
+          <h5 class="mb-0">
+            {{ isAddingNew ? 'Dodaj nowy adres' : 'Edytuj adres' }}
+          </h5>
+        </div>
+        <div class="card-body">
+          <form #addressForm="ngForm" (ngSubmit)="onSubmitAddress(addressForm)">
+            <div class="row">
+              <div class="col-md-8 mb-3">
+                <label for="street" class="form-label">Ulica i numer *</label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  id="street" 
+                  name="street"
+                  [(ngModel)]="newAddress.street"
+                  required 
+                  #streetInput="ngModel"
+                  placeholder="np. ul. Główna 15/2">
+                <div *ngIf="streetInput.invalid && streetInput.touched" class="text-danger">
+                  Ulica i numer są wymagane
+                </div>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label for="postcode" class="form-label">Kod pocztowy *</label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  id="postcode" 
+                  name="postcode"
+                  [(ngModel)]="newAddress.postcode"
+                  required 
+                  pattern="[0-9]{2}-[0-9]{3}"
+                  #postcodeInput="ngModel"
+                  placeholder="00-000">
+                <div *ngIf="postcodeInput.invalid && postcodeInput.touched" class="text-danger">
+                  Kod pocztowy jest wymagany (format: 00-000)
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="city" class="form-label">Miasto *</label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  id="city" 
+                  name="city"
+                  [(ngModel)]="newAddress.city"
+                  required 
+                  #cityInput="ngModel"
+                  placeholder="np. Warszawa">
+                <div *ngIf="cityInput.invalid && cityInput.touched" class="text-danger">
+                  Miasto jest wymagane
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="country" class="form-label">Kraj *</label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  id="country" 
+                  name="country"
+                  [(ngModel)]="newAddress.country"
+                  required 
+                  #countryInput="ngModel"
+                  placeholder="np. Polska">
+                <div *ngIf="countryInput.invalid && countryInput.touched" class="text-danger">
+                  Kraj jest wymagany
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="phoneNumber" class="form-label">Numer telefonu</label>
+                <input 
+                  type="tel" 
+                  class="form-control" 
+                  id="phoneNumber" 
+                  name="phoneNumber"
+                  [(ngModel)]="newAddress.phoneNumber"
+                  #phoneInput="ngModel"
+                  placeholder="np. +48 123 456 789">
+              </div>
+              <div class="col-md-6 mb-3 d-flex align-items-end">
+                <div class="form-check">
+                  <input 
+                    class="form-check-input" 
+                    type="checkbox" 
+                    id="main"
+                    name="main"
+                    [(ngModel)]="newAddress.main">
+                  <label class="form-check-label" for="main">
+                    Ustaw jako adres główny
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-end">
+              <button 
+                type="button" 
+                class="btn btn-secondary me-2" 
+                (click)="onCancelEdit()"
+                [disabled]="isLoading">
+                Anuluj
+              </button>
+              <button 
+                type="submit" 
+                class="btn btn-success" 
+                [disabled]="addressForm.invalid || isLoading">
+                <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
+                {{ isAddingNew ? 'Dodaj adres' : 'Zaktualizuj adres' }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Address List -->
+      <div class="row">
+        <div *ngFor="let address of addresses; let i = index" class="col-md-6 mb-3">
+          <div class="card" [class.border-primary]="address.main">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                  <span *ngIf="address.main" class="badge bg-primary mb-2">Adres główny</span>
+                </div>
+                <div class="dropdown">
+                  <button class="btn btn-outline-secondary btn-sm dropdown-toggle" 
+                          type="button" 
+                          [id]="'dropdownMenuButton' + i"
+                          data-bs-toggle="dropdown" 
+                          aria-expanded="false">
+                    Opcje
+                  </button>
+                  <ul class="dropdown-menu" [attr.aria-labelledby]="'dropdownMenuButton' + i">
+                    <li>
+                      <button class="dropdown-item" (click)="onEditAddress(i)">
+                        <i class="bi bi-pencil"></i> Edytuj
+                      </button>
+                    </li>
+                    <li *ngIf="!address.main">
+                      <button class="dropdown-item" (click)="onSetMainAddress(i)">
+                        <i class="bi bi-star"></i> Ustaw jako główny
+                      </button>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                      <button class="dropdown-item text-danger" (click)="onDeleteAddress(i)">
+                        <i class="bi bi-trash"></i> Usuń
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="address-details">
+                <p class="mb-1"><strong>{{ address.street }}</strong></p>
+                <p class="mb-1">{{ address.postcode }} {{ address.city }}</p>
+                <p class="mb-1">{{ address.country }}</p>
+                <p class="mb-0 text-muted" *ngIf="address.phoneNumber">
+                  <i class="bi bi-telephone"></i> {{ address.phoneNumber }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div *ngIf="addresses.length === 0 && !isAddingNew" class="text-center py-5">
+        <i class="bi bi-house text-muted" style="font-size: 3rem;"></i>
+        <h5 class="mt-3 text-muted">Brak zapisanych adresów</h5>
+        <p class="text-muted">Dodaj swój pierwszy adres, aby ułatwić składanie zamówień</p>
+        <button class="btn btn-primary" (click)="onAddNewAddress()">
+          Dodaj pierwszy adres
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

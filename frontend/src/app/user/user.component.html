@@ -1,117 +1,194 @@
-<div class="row  mt-3">
+<div class="container mt-4">
+  <div class="row">
     <div class="col-md-3 col-sm-12">
-        <div class="list-group">
-                <div class="list-item shadow text-center rounded my-2">
-                    <h5 class="mt-2">MOJE KONTO</h5>
-                </div>
-                <div class="list-item shadow text-center rounded my-2">
-                    <h5 class="mt-2">MOJE DANE</h5>
-                </div>
-                <div class="list-item shadow text-center rounded my-2">
-                    <h5 class="mt-2">MOJE ADRESY</h5>
-                </div>
-                <div class="list-item shadow text-center rounded my-2">
-                    <h5 class="mt-2">ZAMÓWIENIA</h5>
-                </div>
-                <div class="list-item shadow text-center rounded my-2">
-                    <h5 class="mt-2" (click)="logout()">WYLOGUJ</h5>
-                </div>
-
-
+      <div class="list-group">
+            <div class="list-item shadow text-center rounded my-2" 
+                 [class.active]="activeSection === 'account'" 
+                 (click)="setActiveSection('account')">
+                <h5 class="mt-2">MOJE KONTO</h5>
+            </div>
+            <div class="list-item shadow text-center rounded my-2" 
+                 [class.active]="activeSection === 'data'" 
+                 (click)="setActiveSection('data')">
+                <h5 class="mt-2">MOJE DANE</h5>
+            </div>
+            <div class="list-item shadow text-center rounded my-2" 
+                 [class.active]="activeSection === 'addresses'" 
+                 (click)="setActiveSection('addresses')">
+                <h5 class="mt-2">MOJE ADRESY</h5>
+            </div>
+            <div class="list-item shadow text-center rounded my-2" 
+                 [class.active]="activeSection === 'orders'" 
+                 (click)="setActiveSection('orders')">
+                <h5 class="mt-2">ZAMÓWIENIA</h5>
+            </div>
+            <div class="list-item shadow text-center rounded my-2" (click)="logout()">
+                <h5 class="mt-2">WYLOGUJ</h5>
+            </div>
         </div>
     </div>
-
 
     <div class="col-md-9 col-sm-12">
-        <div class="row  m-auto mt-2">
-            <h4>Hej ...imie</h4>
+      <!-- Account Overview Section -->
+      <div *ngIf="activeSection === 'account'" >
+        <div class="row m-auto mt-2">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">
+                  <i class="bi bi-person-circle me-2"></i>
+                  Witaj {{ user?.firstName || 'Użytkowniku' }}!
+                </h4>
+                <p class="card-text text-muted">
+                  Zarządzaj swoim kontem i przeglądaj historię zamówień
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <div class="row shadow m-auto mt-3 p-2">
-            <h4>Jesteś ze mną od ...</h4>
-        </div>
-
         <div class="row m-auto mt-3">
-            <div class="col-sm-6 shadow">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Informacje o koncie</h5>
                 <div class="row">
-                    <div class="col-sm-6">
-                        <h6>
-                            Ostatnie zamówienie
-                            <br>
-                            <small class="text-muted">ile produktów</small>
-                        </h6>
-                    </div>
-                    <div class="col-sm-6 text-end">
-                        <h6>
-                            nr zamówienia
-                            <br>
-                            <small class="text-muted">sku</small>
-                        </h6>
-                    </div>
+                  <div class="col-md-6">
+                    <p><strong>Imię:</strong> {{ user?.firstName || 'N/A' }}</p>
+                    <p><strong>Nazwisko:</strong> {{ user?.lastName || 'N/A' }}</p>
+                  </div>
+                  <div class="col-md-6">
+                    <p><strong>Email:</strong> {{ user?.email || 'N/A' }}</p>
+                    <p><strong>Członek od:</strong> {{ getRegistrationDate() }}</p>
+                  </div>
                 </div>
-                <hr>
-                <div class="row ">
-                    <div class="col-sm-6">
-                        <h6>
-                            2
-                            <br>
-                            <small class="text-muted">3</small>
-                        </h6>
-                    </div>
-                    <div class="col-sm-6 text-end">
-                        <h6>
-                            4
-                            <br>
-                            <small class="text-muted">5</small>
-                        </h6>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="container-fluid text-center">
-                        <button type="button" class="btn btn-lg btn-primary mb-2" disabled>szczegóły zamówienia</button>
-                    </div>
-                </div>
+              </div>
             </div>
-            <div class="col-sm-6 shadow">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <h6>
-                            6
-                            <br>
-                            <small class="text-muted">7</small>
-                        </h6>
-                    </div>
-                    <div class="col-sm-6 text-end">
-                        <h6>
-                            8
-                            <br>
-                            <small class="text-muted">9</small>
-                        </h6>
-                    </div>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <h6>
-                            11
-                            <br>
-                            <small class="text-muted">12</small>
-                        </h6>
-                    </div>
-                    <div class="col-sm-6 text-end">
-                        <h6>
-                            13
-                            <br>
-                            <small class="text-muted">14</small>
-                        </h6>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="container-fluid text-center">
-                        <button type="button" class="btn btn-lg btn-primary mb-2" disabled>szczegóły zamówienia</button>
-                    </div>
-                </div>
+          </div>
+        </div>
+
+      <!-- Statistics Section -->
+        <div class="row m-auto mt-3">
+          <div class="col-md-6 mb-3">
+            <div class="card h-100">
+              <div class="card-body text-center">
+                <i class="bi bi-bag-check display-4 text-primary"></i>
+                <h4 class="card-title mt-3">{{ totalOrders }}</h4>
+                <p class="card-text">Łączna liczba zamówień</p>
+                <button 
+                  class="btn btn-primary" 
+                  (click)="navigateToOrders()"
+                  [disabled]="totalOrders === 0">
+                  Zobacz wszystkie
+                </button>
+              </div>
             </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <div class="card h-100">
+              <div class="card-body text-center">
+                <i class="bi bi-clock-history display-4 text-success"></i>
+                <h4 class="card-title mt-3">
+                  {{ recentOrders.length > 0 ? formatDate(recentOrders[0].orderDate) : 'Brak' }}
+                </h4>
+                <p class="card-text">Ostatnie zamówienie</p>
+                <button 
+                  class="btn btn-success" 
+                  (click)="navigateToOrders()"
+                  [disabled]="recentOrders.length === 0">
+                  Szczegóły
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Orders Section -->
+        <div class="row m-auto mt-3" *ngIf="recentOrders.length > 0">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Ostatnie zamówienia</h5>
+                <button class="btn btn-sm btn-outline-primary" (click)="navigateToOrders()">
+                  Zobacz wszystkie
+                </button>
+              </div>
+              <div class="card-body">
+                <div *ngFor="let order of recentOrders" class="border-bottom pb-3 mb-3">
+                  <div class="row">
+                    <div class="col-md-8">
+                      <h6>Zamówienie #{{ order.orderNumber }}</h6>
+                      <p class="text-muted mb-1">
+                        <small>{{ formatDate(order.orderDate) }}</small>
+                      </p>
+                      <p class="mb-1">
+                        <span class="badge bg-warning">{{ order.status }}</span>
+                      </p>
+                      <p class="text-muted mb-0">
+                        <small>{{ order.items.length }} produkt(ów)</small>
+                      </p>
+                    </div>
+                    <div class="col-md-4 text-end">
+                      <h5 class="text-primary">{{ order.totalAmount }} PLN</h5>
+                      <button class="btn btn-sm btn-outline-primary" (click)="navigateToOrders()">
+                        Szczegóły
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <!-- Loading State -->
+        <div class="row m-auto mt-3" *ngIf="isLoading">
+          <div class="col-12 text-center">
+            <div class="spinner-border" role="status">
+              <span class="sr-only">Ładowanie...</span>
+            </div>
+            <p class="mt-2">Ładowanie danych...</p>
+          </div>
+        </div>
+        <div class="row mt-3">
+
+        </div>
+
+      <!-- Empty State -->
+      <div class="row m-auto mt-3" *ngIf="!isLoading && totalOrders === 0">
+        <div class="col-12">
+          <div class="alert alert-info text-center">
+            <i class="bi bi-info-circle display-4"></i>
+            <h4 class="mt-3">Brak zamówień</h4>
+            <p>Nie masz jeszcze żadnych zamówień. Rozpocznij zakupy!</p>
+            <button class="btn btn-primary" routerLink="/">
+              Przejdź do sklepu
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>  
+    <!-- Personal Data Section -->
+    <div *ngIf="activeSection === 'data'" class="row m-auto mt-2">
+        <div class="row m-auto mt-2">
+            <h4>Moje dane osobowe</h4>
         </div>
     </div>
+
+    <!-- Addresses Section -->
+    <div *ngIf="activeSection === 'addresses'" class="row m-auto mt-2">
+      <div class="row m-auto mt-2">
+        <app-address-management></app-address-management>
+      </div>
+    </div>
+
+    <!-- Orders Section -->
+    <div *ngIf="activeSection === 'orders'" class="row m-auto mt-2">
+        <div class="row m-auto mt-2">
+            <h4>Historia zamówień</h4>
+        </div>
+        <!-- Add order history component here -->
+    </div>
+  </div>
+  </div>
 </div>

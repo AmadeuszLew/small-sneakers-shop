@@ -59,16 +59,25 @@
             <!-- Password input -->
             <div class="form-outline mb-3">
                 <label class="form-label" for="password">Password</label>
-                <input 
-                placeholder="Enter password" 
-                type="password" 
-                id="password"
-                name="password"
-                class="form-control form-control-lg"
-                ngModel
-                required
-                minlength="6"
-                />
+                <div class="input-group">
+                    <input 
+                    placeholder="Enter password" 
+                    [type]="showPassword ? 'text' : 'password'" 
+                    id="password"
+                    name="password"
+                    class="form-control form-control-lg"
+                    ngModel
+                    required
+                    minlength="6"
+                    />
+                    <button 
+                    class="btn btn-outline-secondary" 
+                    type="button" 
+                    (click)="togglePasswordVisibility()"
+                    >
+                        <i [class]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+                    </button>
+                </div>
             </div>
   
             <div class="d-flex justify-content-between align-items-center" *ngIf="isLoginMode">

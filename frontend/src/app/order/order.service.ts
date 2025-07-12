@@ -61,7 +61,10 @@ export class OrderService {
   }
 
   getOrderByNumber(orderNumber: string): Observable<Order> {
-    return this.http.get<Order>(`${this.baseUrl}/${orderNumber}`);
+    const token = this.getAuthToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  
+    return this.http.get<Order>(`${this.baseUrl}/${orderNumber}`, { headers });
   }
 
   private getAuthToken(): string {
