@@ -10,7 +10,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import com.amadeusz.sneakershop.Address;
 @Data
 @Document
 @NoArgsConstructor
@@ -27,6 +26,7 @@ public class User {
     private List<Address> addresses;
     private String phoneNumber;
     private LocalDateTime createdAt;
+    private boolean active = true;
 
     public User(String email, String password, String firstName, String lastName, List<Address> addresses, String phoneNumber) {
         this.email = email;

@@ -22,7 +22,6 @@ public class UserController {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         return ResponseEntity.ok(user.getAddresses() != null ? user.getAddresses() : List.of());
-
     }
 
     @PostMapping("/{userId}/addresses")
@@ -30,7 +29,6 @@ public class UserController {
         User updatedUser = userService.addAddress(userId, address);
 
         return ResponseEntity.ok(updatedUser);
-
     }
 
     @PutMapping("/{userId}/addresses/{addressIndex}")
@@ -41,7 +39,6 @@ public class UserController {
         User updatedUser = userService.updateAddress(userId, addressIndex, address);
 
         return ResponseEntity.ok(updatedUser);
-
     }
 
     @DeleteMapping("/{userId}/addresses/{addressIndex}")
@@ -49,7 +46,6 @@ public class UserController {
         User updatedUser = userService.deleteAddress(userId, addressIndex);
 
         return ResponseEntity.ok(updatedUser);
-
     }
 
     @PatchMapping("/{userId}/addresses/{addressIndex}/main")
@@ -57,6 +53,36 @@ public class UserController {
         User updatedUser = userService.setMainAddress(userId, addressIndex);
 
         return ResponseEntity.ok(updatedUser);
+    }
 
+    @GetMapping("/{userId}")
+    public ResponseEntity<User> getUserDetails(@PathVariable String userId) {
+            User user = userService.getUserDetails(userId);
+            
+            return ResponseEntity.ok(user);
+    }
+    
+    @PutMapping("/{userId}")
+    public ResponseEntity<User> updateUserInfo(
+            @PathVariable String userId, 
+            @Valid @RequestBody UpdateUserRequest updateRequest) {
+            User updatedUser = userService.updateUserInfo(userId, updateRequest);
+            
+            return ResponseEntity.ok(updatedUser);
+    }
+    
+    @PatchMapping("/{userId}/deactivate")
+    public ResponseEntity<Void> deactivateAccount(@PathVariable String userId) {
+            userService.deactivateAccount(userId);
+            
+            return ResponseEntity.ok().build();
+        
+    }
+    
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Void> deleteAccount(@PathVariable String userId) {
+            userService.deleteAccount(userId);
+            
+            return ResponseEntity.ok().build();
     }
 }

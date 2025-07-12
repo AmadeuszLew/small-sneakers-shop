@@ -4,8 +4,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import io.micrometer.common.util.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -43,7 +46,8 @@ public class UserService {
             savedUser.getEmail(),
             savedUser.getFirstName(),
             savedUser.getLastName(),
-            savedUser.getId()
+            savedUser.getId(),
+                savedUser.getCreatedAt().toLocalDate()
         );
     }
 
@@ -63,7 +67,8 @@ public class UserService {
             user.getEmail(),
             user.getFirstName(),
             user.getLastName(),
-            user.getId()
+            user.getId(),
+                user.getCreatedAt().toLocalDate()
         );
     }
 
@@ -137,5 +142,78 @@ public class UserService {
             user.setAddresses(new ArrayList<>());
         }
         return user.getAddresses();
+    }
+
+    public User updateUserInfo(String userId, UpdateUserRequest updateRequest) {
+        Optional<User> userOpt = userRepository.findById(userId);
+        if (userOpt.isEmpty()) {
+            throw new RuntimeException("User not found");
+        }
+        
+        User user = userOpt.get();
+        
+        if (shouldUpdateEmail(updateRequest, user)) {
+            if (!validatePasswordToChangeData(updateRequest, user)) {
+                throw new RuntimeException("Current password is required to change email");
+            }
+            
+            if (userRepository.existsByEmail(updateRequest.getEmail())) {
+                throw new RuntimeException("Email already in use");
+            }
+            
+            user.setEmail(updateRequest.getEmail());
+        }
+        
+        if (userProvidedNewPasswordToUpdate(updateRequest)) {
+            if (StringUtils.isBlank(updateRequest.getCurrentPassword()) || 
+                !passwordEncoder.matches(updateRequest.getCurrentPassword(), user.getPassword())) {
+                throw new RuntimeException("Current password is required to change password");
+            }
+            
+            user.setPassword(passwordEncoder.encode(updateRequest.getNewPassword()));
+        }
+        
+        user.setFirstName(updateRequest.getFirstName());
+        user.setLastName(updateRequest.getLastName());
+        user.setPhoneNumber(updateRequest.getPhoneNumber());
+        
+        return userRepository.save(user);
+    }
+
+    public void deactivateAccount(String userId) {
+        Optional<User> userOpt = userRepository.findById(userId);
+        if (userOpt.isEmpty()) {
+            throw new RuntimeException("User not found");
+        }
+        
+        User user = userOpt.get();
+        user.setActive(false);
+        userRepository.save(user);
+    }
+    
+    public void deleteAccount(String userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new RuntimeException("User not found");
+        }
+        
+        userRepository.deleteById(userId);
+    }
+
+    public User getUserDetails(String userId) {
+        return userRepository.findById(userId)
+            .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+    
+    private boolean validatePasswordToChangeData(UpdateUserRequest updateRequest, User user){
+        return Objects.nonNull(updateRequest.getCurrentPassword()) && 
+                passwordEncoder.matches(updateRequest.getCurrentPassword(), user.getPassword());
+    }
+
+    private boolean shouldUpdateEmail(UpdateUserRequest updateRequest, User user){
+        return Objects.nonNull(updateRequest.getEmail()) && !Objects.equals(user.getEmail(), updateRequest.getEmail());
+    }
+
+    private boolean userProvidedNewPasswordToUpdate(UpdateUserRequest updateRequest){
+        return StringUtils.isNotEmpty(updateRequest.getNewPassword());
     }
 }

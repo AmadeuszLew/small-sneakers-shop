@@ -1,0 +1,19 @@
+.card {
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+.btn-outline-danger:hover,
+.btn-danger:hover {
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+.btn-outline-warning:hover,
+.btn-warning:hover {
+  box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
+}

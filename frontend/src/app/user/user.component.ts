@@ -1,18 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { AuthorizationService } from '../authorization/authorization.service';
 import { OrderService, Order } from '../order/order.service';
 import { AlertsService } from '../shared/alerts.service';
-import { User } from '../authorization/user.model';
+import { User, AuthorizationService } from '../authorization';
 import { AddressManagementComponent } from './Addresses/address-management/address-management.component';
+import { PersonalDataManagementComponent } from './personal-data-management/personal-data-management.component';
 
 @Component({
   selector: 'app-user',
   standalone: true,
   imports: [
     CommonModule,
-    AddressManagementComponent
+    AddressManagementComponent,
+    PersonalDataManagementComponent
   ],
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
@@ -25,7 +26,7 @@ export class UserComponent implements OnInit {
   activeSection = 'account';
 
   constructor(
-    private alertService: AlertsService, 
+    private alertService: AlertsService,
     private authService: AuthorizationService,
     private orderService: OrderService,
     private router: Router
@@ -68,27 +69,10 @@ export class UserComponent implements OnInit {
     this.router.navigate(['/order-history']);
   }
 
-  navigateToAccount() {
-    // You can implement account settings later
-    this.alertService.riseAlert('info', 'Funkcja w przygotowaniu');
-  }
-
-  navigateToAddresses() {
-    // You can implement address management later
-    this.alertService.riseAlert('info', 'Funkcja w przygotowaniu');
-  }
-
   logout() {
     this.authService.logout();
     this.alertService.riseAlert('success', 'Pomyślnie wylogowano');
     this.router.navigate(['/']);
-  }
-
-  getRegistrationDate(): string {
-    if (this.user?.createdAt) {
-      return new Date(this.user.createdAt).toLocaleDateString('pl-PL');
-    }
-    return 'N/A';
   }
 
   formatDate(dateString: string): string {

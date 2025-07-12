@@ -2,23 +2,23 @@
   <div class="row">
     <div class="col-md-3 col-sm-12">
       <div class="list-group">
-            <div class="list-item shadow text-center rounded my-2" 
-                 [class.active]="activeSection === 'account'" 
+            <div class="list-item shadow text-center rounded my-2"
+                 [class.active]="activeSection === 'account'"
                  (click)="setActiveSection('account')">
                 <h5 class="mt-2">MOJE KONTO</h5>
             </div>
-            <div class="list-item shadow text-center rounded my-2" 
-                 [class.active]="activeSection === 'data'" 
+            <div class="list-item shadow text-center rounded my-2"
+                 [class.active]="activeSection === 'data'"
                  (click)="setActiveSection('data')">
                 <h5 class="mt-2">MOJE DANE</h5>
             </div>
-            <div class="list-item shadow text-center rounded my-2" 
-                 [class.active]="activeSection === 'addresses'" 
+            <div class="list-item shadow text-center rounded my-2"
+                 [class.active]="activeSection === 'addresses'"
                  (click)="setActiveSection('addresses')">
                 <h5 class="mt-2">MOJE ADRESY</h5>
             </div>
-            <div class="list-item shadow text-center rounded my-2" 
-                 [class.active]="activeSection === 'orders'" 
+            <div class="list-item shadow text-center rounded my-2"
+                 [class.active]="activeSection === 'orders'"
                  (click)="setActiveSection('orders')">
                 <h5 class="mt-2">ZAMÓWIENIA</h5>
             </div>
@@ -58,7 +58,7 @@
                   </div>
                   <div class="col-md-6">
                     <p><strong>Email:</strong> {{ user?.email || 'N/A' }}</p>
-                    <p><strong>Członek od:</strong> {{ getRegistrationDate() }}</p>
+                    <p><strong>Członek od:</strong> {{  user?.createdAt }}</p>
                   </div>
                 </div>
               </div>
@@ -74,8 +74,8 @@
                 <i class="bi bi-bag-check display-4 text-primary"></i>
                 <h4 class="card-title mt-3">{{ totalOrders }}</h4>
                 <p class="card-text">Łączna liczba zamówień</p>
-                <button 
-                  class="btn btn-primary" 
+                <button
+                  class="btn btn-primary"
                   (click)="navigateToOrders()"
                   [disabled]="totalOrders === 0">
                   Zobacz wszystkie
@@ -92,8 +92,8 @@
                   {{ recentOrders.length > 0 ? formatDate(recentOrders[0].orderDate) : 'Brak' }}
                 </h4>
                 <p class="card-text">Ostatnie zamówienie</p>
-                <button 
-                  class="btn btn-success" 
+                <button
+                  class="btn btn-success"
                   (click)="navigateToOrders()"
                   [disabled]="recentOrders.length === 0">
                   Szczegóły
@@ -167,12 +167,10 @@
           </div>
         </div>
       </div>
-    </div>  
+    </div>
     <!-- Personal Data Section -->
     <div *ngIf="activeSection === 'data'" class="row m-auto mt-2">
-        <div class="row m-auto mt-2">
-            <h4>Moje dane osobowe</h4>
-        </div>
+      <app-personal-data-management></app-personal-data-management>
     </div>
 
     <!-- Addresses Section -->
