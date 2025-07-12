@@ -1,0 +1,155 @@
+<div class="container-fluid px-0">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h4>Historia zamówień</h4>
+    <button 
+      class="btn btn-sm btn-outline-primary" 
+      (click)="loadOrders()"
+      [disabled]="loading">
+      <i class="bi bi-arrow-clockwise me-1"></i> Odśwież
+    </button>
+  </div>
+
+  <!-- Error Alert -->
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="text-center py-4">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Ładowanie...</span>
+    </div>
+    <p class="mt-2">Ładowanie zamówień...</p>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && !error && orders.length === 0" class="text-center py-5">
+    <i class="bi bi-bag text-muted" style="font-size: 3rem;"></i>
+    <h5 class="mt-3 text-muted">Brak zamówień</h5>
+    <p class="text-muted">Nie złożyłeś jeszcze żadnych zamówień</p>
+    <button class="btn btn-primary" routerLink="/">
+      Zacznij zakupy
+    </button>
+  </div>
+
+  <!-- Orders List -->
+  <div *ngIf="!loading && !error && orders.length > 0">
+    <div class="card mb-3" *ngFor="let order of orders">
+      <!-- Order Header -->
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <div>
+          <strong>Zamówienie #{{ order.orderNumber }}</strong>
+          <span class="text-muted ms-2">{{ formatDate(order.orderDate) }}</span>
+        </div>
+        <span class="badge {{ getStatusBadgeClass(order.status) }}">
+          {{ getStatusText(order.status) }}
+        </span>
+      </div>
+      
+      <!-- Order Summary -->
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-8">
+            <div class="d-flex align-items-center">
+              <div class="order-thumbnails me-3">
+                <div class="d-flex">
+                  <div *ngFor="let item of order.items.slice(0, 3); let i = index" 
+                      class="thumbnail-container" 
+                      [style.z-index]="3-i"
+                      [style.margin-left.px]="i > 0 ? -15 : 0">
+                    <img [src]="item.imagePath" 
+                        class="img-thumbnail" 
+                        alt="{{ item.sneakerName }}"
+                        style="width: 50px; height: 50px; object-fit: cover;">
+                  </div>
+                  <div *ngIf="order.items.length > 3" 
+                      class="thumbnail-container more-items" 
+                      style="z-index: 0; margin-left: -15px;">
+                    <div class="more-items-count">
+                      +{{ order.items.length - 3 }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <p class="mb-1">{{ order.items.length }} produkt(ów)</p>
+                <button 
+                  class="btn btn-sm btn-link p-0" 
+                  (click)="toggleOrderDetails(order.id)">
+                  {{ expandedOrderId === order.id ? 'Ukryj szczegóły' : 'Pokaż szczegóły' }}
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 text-md-end">
+            <h5 class="fw-bold text-primary mb-1">{{ order.totalAmount }} PLN</h5>
+            <p class="text-muted small mb-0">w tym dostawa: 15 PLN</p>
+          </div>
+        </div>
+        
+        <!-- Expanded Order Details -->
+        <div *ngIf="expandedOrderId === order.id" class="mt-4 order-details">
+          <hr>
+          
+          <!-- Items -->
+          <h6 class="mb-3">Produkty:</h6>
+          <div class="table-responsive">
+            <table class="table table-sm">
+              <thead class="table-light">
+                <tr>
+                  <th>Produkt</th>
+                  <th>Rozmiar</th>
+                  <th>Ilość</th>
+                  <th class="text-end">Cena</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of order.items">
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <img [src]="item.imagePath" 
+                          class="img-thumbnail me-2" 
+                          alt="{{ item.sneakerName }}"
+                          style="width: 40px; height: 40px; object-fit: cover;">
+                      <span>{{ item.sneakerName }}</span>
+                    </div>
+                  </td>
+                  <td>{{ item.size }}</td>
+                  <td>{{ item.quantity }}</td>
+                  <td class="text-end">{{ item.price * item.quantity }} PLN</td>
+                </tr>
+              </tbody>
+              <tfoot class="table-light">
+                <tr>
+                  <td colspan="3" class="text-end fw-bold">Produkty:</td>
+                  <td class="text-end">{{ calculateItemsTotal(order) }} PLN</td>
+                </tr>
+                <tr>
+                  <td colspan="3" class="text-end fw-bold">Dostawa:</td>
+                  <td class="text-end">15 PLN</td>
+                </tr>
+                <tr>
+                  <td colspan="3" class="text-end fw-bold">Razem:</td>
+                  <td class="text-end fw-bold">{{ order.totalAmount }} PLN</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          
+          <!-- Shipping Information -->
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <div class="card bg-light">
+                <div class="card-body">
+                  <h6 class="card-title">Adres dostawy</h6>
+                  <p class="card-text mb-0">{{ order.customerName }}</p>
+                  <p class="card-text">{{ order.shippingAddress }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

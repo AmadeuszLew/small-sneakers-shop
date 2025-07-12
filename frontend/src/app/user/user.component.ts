@@ -6,6 +6,7 @@ import { AlertsService } from '../shared/alerts.service';
 import { User, AuthorizationService } from '../authorization';
 import { AddressManagementComponent } from './Addresses/address-management/address-management.component';
 import { PersonalDataManagementComponent } from './personal-data-management/personal-data-management.component';
+import { UserOrdersComponent } from './user-orders/user-orders.component';
 
 @Component({
   selector: 'app-user',
@@ -13,7 +14,8 @@ import { PersonalDataManagementComponent } from './personal-data-management/pers
   imports: [
     CommonModule,
     AddressManagementComponent,
-    PersonalDataManagementComponent
+    PersonalDataManagementComponent,
+    UserOrdersComponent
   ],
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
