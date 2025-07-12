@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AuthorizationService } from '../authorization/authorization.service';
-import { Address } from 'app/authorization/user.model';
+import {Address, User, UserUpdateRequest, AuthorizationService }  from '../authorization';
 
 @Injectable({
   providedIn: 'root'
@@ -61,6 +60,38 @@ const token = this.getAuthToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
     return this.http.patch(`${this.baseUrl}/${userId}/addresses/${addressIndex}/main`, {}, { headers });
+  }
+
+  getUserDetails(): Observable<User> {
+    const userId = this.getCurrentUserId();
+    const token = this.getAuthToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http.get<User>(`${this.baseUrl}/${userId}`, { headers });
+  }
+
+  updateUserInfo(updateData: UserUpdateRequest): Observable<User> {
+    const userId = this.getCurrentUserId();
+    const token = this.getAuthToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http.put<User>(`${this.baseUrl}/${userId}`, updateData, { headers });
+  }
+
+  deactivateAccount(): Observable<any> {
+    const userId = this.getCurrentUserId();
+    const token = this.getAuthToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http.patch(`${this.baseUrl}/${userId}/deactivate`, {}, { headers });
+  }
+
+  deleteAccount(): Observable<any> {
+    const userId = this.getCurrentUserId();
+    const token = this.getAuthToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http.delete(`${this.baseUrl}/${userId}`, { headers });
   }
 
   private getAuthToken(): string {

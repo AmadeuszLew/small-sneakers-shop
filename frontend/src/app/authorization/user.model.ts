@@ -7,7 +7,8 @@ export class User {
         public firstName?: string,
         public lastName?: string,
         public createdAt?: Date,
-        public addresses?: Address[]
+        public addresses?: Address[],
+        public phoneNumber?: string
     ) {}
 
     get token() {
@@ -33,4 +34,13 @@ export interface Address {
     country: string;
     phoneNumber: string;
     main: boolean;
+}
+
+export interface UserUpdateRequest {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phoneNumber?: string;
+  currentPassword?: string;
+  newPassword?: string;
 }

@@ -12,6 +12,7 @@ export interface AuthResponseData {
     lastName: string;
     userId: string;
     addresses?: Address[];
+    createdAt?: Date;
 }
 
 export interface RegisterData {
@@ -43,7 +44,8 @@ export class AuthorizationService {
                         3600,
                         resData.userId,
                         resData.firstName,
-                        resData.lastName
+                        resData.lastName,
+                        resData.createdAt
                     );
                 })
             );
@@ -60,7 +62,8 @@ export class AuthorizationService {
                         3600,
                         resData.userId,
                         resData.firstName,
-                        resData.lastName
+                        resData.lastName,
+                      resData.createdAt
                     );
                 })
             );
@@ -74,8 +77,8 @@ export class AuthorizationService {
             clearTimeout(this.timer);
         }
         this.timer = null;
-    }    
-    
+    }
+
     autoLogin() {
         const userData = JSON.parse(localStorage.getItem('userData'));
         if (!userData) {
@@ -99,9 +102,9 @@ export class AuthorizationService {
         return !!this.user.value?.token;
     }
 
-    private handleAuthentication(email: string, token: string, expiresIn: number, userId: string, firstName: string, lastName: string) {
+    private handleAuthentication(email: string, token: string, expiresIn: number, userId: string, firstName: string, lastName: string, createdAt:Date) {
         const expirationDate = new Date( new Date().getTime() + +expiresIn * 1000);
-        const user = new User(email, userId, token, expirationDate, firstName, lastName);
+        const user = new User(email, userId, token, expirationDate, firstName, lastName, createdAt);
         this.user.next(user);
         localStorage.setItem('userData', JSON.stringify(user));
         console.log('User authenticated:', user);
@@ -112,13 +115,13 @@ export class AuthorizationService {
         if (!errorRes.error) {
             return throwError(errorMessage);
         }
-        
+
         if (errorRes.status === 400) {
             errorMessage = 'Invalid credentials or user already exists';
         } else if (errorRes.status === 401) {
             errorMessage = 'Authentication failed';
         }
-        
+
         return throwError(errorMessage);
     }
 }
