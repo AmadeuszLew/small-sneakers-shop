@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { SizeChart } from '../shared/models/size-chart.model';
 import { Sneaker } from './sneaker.model';
 import { BehaviorSubject, Subject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-// Backend API response interface (matches MongoDB structure)
 interface BackendSneaker {
   id: string;
   sku: string;
@@ -16,6 +15,13 @@ interface BackendSneaker {
   price: number;
   imagePath: string;
   sizesOfShoe: { size: number; availability: number }[];
+  onSale?: boolean;
+}
+
+interface FilterOptions {
+  brand?: string;
+  model?: string;
+  onSale?: boolean;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -23,12 +29,21 @@ export class SneakersService {
   sneakersChanged = new Subject<Sneaker[]>();
   private sneakers: Sneaker[] = [];
   private baseUrl = 'http://localhost:8080/api/sneakers';
+  private currentFilter: FilterOptions = {};
 
   constructor(private http: HttpClient) {
     this.loadSneakersFromAPI();
   }
-  private loadSneakersFromAPI(): void {
-    this.http.get<BackendSneaker[]>(this.baseUrl)
+
+  loadSneakersFromAPI(filter: FilterOptions = {}): void {
+    this.currentFilter = { ...filter };
+
+    let params = new HttpParams();
+    if (filter.brand) params = params.append('brand', filter.brand);
+    if (filter.model) params = params.append('model', filter.model);
+    if (filter.onSale) params = params.append('onSale', filter.onSale.toString());
+
+    this.http.get<BackendSneaker[]>(this.baseUrl, { params })
       .pipe(
         map(backendSneakers => backendSneakers.map(this.convertBackendSneakerToFrontend))
       )
@@ -39,7 +54,6 @@ export class SneakersService {
         },
         error: (error) => {
           console.error('Error loading sneakers from API:', error);
-          // Fallback to empty array if API fails
           this.sneakers = [];
           this.sneakersChanged.next([]);
         }
@@ -50,7 +64,7 @@ export class SneakersService {
     const sizesAvailable = backendSneaker.sizesOfShoe.map(
       size => new SizeChart(size.size, size.availability)
     );
-    
+
     return new Sneaker(
       backendSneaker.sku,
       backendSneaker.model,
@@ -59,25 +73,23 @@ export class SneakersService {
       backendSneaker.colorway,
       backendSneaker.price,
       backendSneaker.imagePath,
-      sizesAvailable
+      sizesAvailable,
+      backendSneaker.onSale
     );
   }
 
   getAllSneakers() {
     return this.sneakers.slice();
   }
-  // getSneaker(id:string){
+
   getSneaker(id: string) {
     return this.sneakers.find(x => x.sku === id);
   }
 
-  // Observable method to get sneaker when data is ready
   getSneakerObservable(id: string): Observable<Sneaker | undefined> {
     if (this.sneakers.length > 0) {
-      // Data already loaded
       return new BehaviorSubject(this.getSneaker(id));
     } else {
-      // Wait for data to load
       return this.sneakersChanged.pipe(
         map(() => this.getSneaker(id))
       );
@@ -87,22 +99,24 @@ export class SneakersService {
   printSneakerName(sneaker: Sneaker) {
     return sneaker.model + ' ' + sneaker.name;
   }
-  filterByModel(model: string) {
-    const snkrs = this.sneakers.filter((snkrs) => {
-      return snkrs.model.toLowerCase().includes(model.toLowerCase());
-    });
-    this.sneakersChanged.next(snkrs);
-  }
 
   filterByBrand(brand: string): void {
-    const filteredSnkrs: Sneaker[] = this.sneakers.filter((snkrs) => {
-      return snkrs.brand.toLowerCase().includes(brand.toLowerCase());
-    });
-    this.sneakersChanged.next(filteredSnkrs);
+    this.loadSneakersFromAPI({ ...this.currentFilter, brand });
   }
 
-  // Method to refresh data from API
+  filterByModel(model: string): void {
+    this.loadSneakersFromAPI({ ...this.currentFilter, model });
+  }
+
+  showOnSaleOnly(onSale: boolean = true): void {
+    this.loadSneakersFromAPI({ ...this.currentFilter, onSale });
+  }
+
+  resetFilters(): void {
+    this.loadSneakersFromAPI({});
+  }
+
   refreshSneakers(): void {
-    this.loadSneakersFromAPI();
+    this.loadSneakersFromAPI(this.currentFilter);
   }
 }

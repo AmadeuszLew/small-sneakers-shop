@@ -19,7 +19,6 @@ public class SneakershopApplication {
     }    @Bean
     CommandLineRunner runner(SneakerRepository repository, MongoTemplate mongoTemplate) {
         return args -> {
-            // Initialize all sneakers data
             List<Sneaker> sneakersToAdd = List.of(
                 new Sneaker(
                     "555088-711",
@@ -147,7 +146,8 @@ public class SneakershopApplication {
                         new SizeAvailability(45, 0),
                         new SizeAvailability(45.5, 0),
                         new SizeAvailability(46, 1)
-                    )
+                    ),
+                        true
                 ),
                 new Sneaker(
                     "FZ5897",

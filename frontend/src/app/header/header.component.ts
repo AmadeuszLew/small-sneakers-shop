@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { AuthorizationService } from '../authorization/authorization.service';
+import { AuthorizationService } from '../authorization';
 import { CartService } from '../cart/cart.service';
 
 @Component({
@@ -11,9 +11,9 @@ import { CartService } from '../cart/cart.service';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   private userSubscription: Subscription;
-  isAuthenticated = false;
+  isUserLoggedIn = false;
   totalItems = 0;
-  
+
   constructor(
     private authService: AuthorizationService,
     private cartService: CartService,
@@ -22,13 +22,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.userSubscription = this.authService.user.subscribe(user => {
-      this.isAuthenticated = !user ? false : true;
+      this.isUserLoggedIn = !!user;
     });
     this.cartService.productList.subscribe((sneaker) => {
       this.totalItems = sneaker.length;
     });
   }
-  
+
   ngOnDestroy(): void {
     this.userSubscription.unsubscribe();
   }
@@ -36,5 +36,23 @@ export class HeaderComponent implements OnInit, OnDestroy {
   logout() {
     this.authService.logout();
     this.router.navigate(['/']);
+  }
+
+  filterByBrand(brand: string): void {
+    this.router.navigate(['/'], {
+      queryParams: { brand }
+    });
+  }
+
+  filterByModelAndBrand(model: string, brand: string): void {
+    this.router.navigate(['/'], {
+      queryParams: { model, brand }
+    });
+  }
+
+  showOnSale(): void {
+    this.router.navigate(['/'], {
+      queryParams: { onSale: 'true' }
+    });
   }
 }
