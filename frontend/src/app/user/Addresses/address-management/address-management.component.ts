@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Address } from 'app/authorization/user.model';
 import { AlertsService } from 'app/shared/alerts.service';
-import { UserService } from 'app/user/user.service';
+import { UserService } from "../../user.service";
 
 @Component({
   selector: 'app-address-management',
@@ -78,6 +78,7 @@ export class AddressManagementComponent implements OnInit {
     this.error = '';
 
     if (this.isAddingNew) {
+      debugger;
       this.userService.addAddress(this.newAddress).subscribe({
         next: () => {
           this.alertService.riseAlert('success', 'Adres został dodany pomyślnie');

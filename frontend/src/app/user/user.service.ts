@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Address } from '../authorization/user.model';
 import { AuthorizationService } from '../authorization/authorization.service';
+import { Address } from 'app/authorization/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,6 @@ export class UserService {
 
   constructor(
     private http: HttpClient,
-    private HttpHeaders: HttpHeaders,
     private authService: AuthorizationService
   ) {}
 
@@ -26,15 +25,18 @@ export class UserService {
 
   getUserAddresses(): Observable<Address[]> {
     const userId = this.getCurrentUserId();
-    return this.http.get<Address[]>(`${this.baseUrl}/${userId}/addresses`);
+    const token = this.getAuthToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http.get<Address[]>(`${this.baseUrl}/${userId}/addresses`, { headers });
   }
 
-  addAddress(address: Address): Observable<any> {
+  addAddress(address: Address): Observable<Address[]> {
     const userId = this.getCurrentUserId();
     const token = this.getAuthToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    return this.http.post(`${this.baseUrl}/${userId}/addresses`, address, { headers });
+    return this.http.post<Address[]>(`${this.baseUrl}/${userId}/addresses`, address, { headers });
   }
 
   updateAddress(addressIndex: number, address: Address): Observable<any> {

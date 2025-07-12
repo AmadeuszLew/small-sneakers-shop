@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -14,6 +16,10 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
+
+    public Optional<User> findById(String userId) {
+        return userRepository.findById(userId);
+    }
 
     public AuthResponse register(RegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
@@ -61,21 +67,18 @@ public class UserService {
         );
     }
 
-    public Optional<User> findByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
-
     public User addAddress(String userId, Address address) {
         Optional<User> userOpt = userRepository.findById(userId);
         if (userOpt.isEmpty()) {
             throw new RuntimeException("User not found");
         }
         User user = userOpt.get();
-        if (address.isMain() || user.getAddresses().isEmpty()) {
-            user.getAddresses().forEach(addr -> addr.setMain(false));
+        List<Address> addresses = getOrInitAddresses(user);
+        if (address.isMain() || addresses.isEmpty()) {
+            addresses.forEach(addr -> addr.setMain(false));
             address.setMain(true);
         }
-        user.getAddresses().add(address);
+        addresses.add(address);
 
         return userRepository.save(user);
     }
@@ -108,7 +111,7 @@ public class UserService {
         }
         Address removedAddress = user.getAddresses().remove(addressIndex);
         if (removedAddress.isMain() && !user.getAddresses().isEmpty()) {
-            user.getAddresses().get(0).setMain(true);
+            user.getAddresses().getFirst().setMain(true);
         }
         
         return userRepository.save(user);
@@ -127,5 +130,12 @@ public class UserService {
             .forEach(i -> user.getAddresses().get(i).setMain(i == addressIndex));
 
         return userRepository.save(user);
+    }
+
+    private List<Address> getOrInitAddresses(User user) {
+        if (user.getAddresses() == null) {
+            user.setAddresses(new ArrayList<>());
+        }
+        return user.getAddresses();
     }
 }
