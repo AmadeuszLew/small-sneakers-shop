@@ -1,11 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { AuthorizationService } from '../authorization/authorization.service';
 import { OrderService, Order } from '../order/order.service';
 import { AlertsService } from '../shared/alerts.service';
 import { User } from '../authorization/user.model';
+import { AddressManagementComponent } from './Addresses/address-management/address-management.component';
+
 @Component({
   selector: 'app-user',
+  standalone: true,
+  imports: [
+    CommonModule,
+    AddressManagementComponent
+  ],
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })

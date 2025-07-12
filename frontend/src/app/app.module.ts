@@ -28,7 +28,6 @@ import { AddressManagementComponent } from './user/Addresses/address-management/
     AuthorizationComponent,
     LoadingSpinnerComponent,
     DataComponent,
-    UserComponent,
     SneakersComponent,
     SneakerDetailComponent,
     CartComponent,
@@ -43,8 +42,7 @@ import { AddressManagementComponent } from './user/Addresses/address-management/
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    BrowserAnimationsModule,
-    AddressManagementComponent
+    BrowserAnimationsModule
   ],
   providers: [AlertsService, SneakersService],
   bootstrap: [AppComponent]
