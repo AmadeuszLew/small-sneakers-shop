@@ -113,6 +113,7 @@ export class SneakersService {
   }
 
   resetFilters(): void {
+    this.currentFilter = {};
     this.loadSneakersFromAPI({});
   }
 

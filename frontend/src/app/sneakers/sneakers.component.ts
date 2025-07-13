@@ -121,6 +121,9 @@ export class SneakersComponent implements OnInit, OnDestroy {
   removeFilter(type: string): void {
     const currentParams = { ...this.route.snapshot.queryParams };
     delete currentParams[type];
+    if(Object.keys(currentParams).length === 0) {
+      this.clearAllFilters();
+    }
 
     this.router.navigate([], {
       relativeTo: this.route,

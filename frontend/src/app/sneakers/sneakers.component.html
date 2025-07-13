@@ -1,21 +1,20 @@
 <div class="container">
     <div class="row">
-        <!-- Filter Chips (Optional) -->
         <div class="col-12 mb-3" *ngIf="activeFilters.length > 0">
+<!--          bug here- if user delete filters by `removeFilter` we dont clear all filters and there is no activeFilter but query fot it is not sent-->
             <div class="d-flex flex-wrap gap-2">
                 <div class="filter-chip" *ngFor="let filter of activeFilters">
                     {{ filter.label }}
-                    <button class="btn-close btn-close-sm ms-2" 
+                    <button class="btn-close btn-close-sm ms-2"
                             (click)="removeFilter(filter.type)"></button>
                 </div>
-                <button class="btn btn-sm btn-outline-secondary" 
+                <button class="btn btn-sm btn-outline-secondary"
                         (click)="clearAllFilters()">
                     Wyczyść wszystkie
                 </button>
             </div>
         </div>
 
-        <!-- Sneakers Grid -->
         <div class="col-md-3 col-sm-4 col-6 my-1" *ngFor="let item of sneakers">
             <div class="card h-100 shadow-sm" routerLink="/{{item.sku}}">
                 <div class="position-relative">
