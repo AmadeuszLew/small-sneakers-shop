@@ -1,0 +1,58 @@
+<!-- Add this above your bottom navbar in mobile-header.component.html -->
+<div class="mobile-top-header d-sm-none">
+  <div class="container-fluid py-2">
+    <div class="d-flex align-items-center">
+        <a (click)="resetFiltersAndGoHome()" class="me-auto">
+            <img src="assets/img/logo.png" alt="Lenny's Sneakers" height="32" class="mobile-header-logo">
+        </a>
+        <form class="d-flex mt-1 mb-1" role="search" (ngSubmit)="onSearch($event)">
+            <input 
+                class="form-control form-control-sm" 
+                type="search" 
+                placeholder="Szukaj" 
+                aria-label="Search"
+                [(ngModel)]="searchText"
+                name="search">
+            <button class="btn btn-sm btn-outline-success" type="submit">
+                <i class="bi bi-search"></i>
+            </button>
+        </form>
+    </div>
+  </div>
+</div>
+
+<!-- Mobile bottom navbar -->
+<nav class="navbar fixed-bottom navbar-light bg-light d-sm-none" id="mobile-navbar">
+  <div class="container-fluid">
+    <div class="row w-100">
+      <div class="col-4 text-center">
+        <button 
+          class="btn btn-link text-dark w-100 py-2"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#mobile-side-nav"
+          aria-controls="mobile-side-nav">
+          <i class="bi bi-list fs-4"></i>
+          <div class="small">Menu</div>
+        </button>
+      </div>
+      
+      <div class="col-4 text-center">
+        <a class="btn btn-link text-dark w-100 py-2" routerLink="{{ isUserLoggedIn ? '/user' : '/authorization' }}">
+          <i class="bi {{ isUserLoggedIn ? 'bi-person-check' : 'bi-person' }} fs-4"></i>
+          <div class="small">{{ isUserLoggedIn ? 'Profil' : 'Zaloguj' }}</div>
+        </a>
+      </div>
+      
+      <div class="col-4 text-center">
+        <a class="btn btn-link text-dark position-relative w-100 py-2" routerLink="/cart">
+          <i class="bi bi-cart fs-4"></i>
+          <span *ngIf="totalItems > 0" class="position-absolute top-0 start-75 translate-middle badge rounded-pill bg-danger">
+            {{totalItems}}
+          </span>
+          <div class="small">Koszyk</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>

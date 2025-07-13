@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CartService } from '../../cart/cart.service';
 import { Product } from '../../cart/product.model';
@@ -7,6 +9,11 @@ import { SneakersService } from '../sneakers.service';
 
 @Component({
   selector: 'app-sneaker-detail',
+  standalone: true, // If converting to standalone
+  imports: [
+    CommonModule,
+    FormsModule
+  ],
   templateUrl: './sneaker-detail.component.html',
   styleUrls: ['./sneaker-detail.component.css']
 })

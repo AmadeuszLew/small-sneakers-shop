@@ -1,0 +1,30 @@
+.logo-image {
+  border-radius: 8px;
+  filter: drop-shadow(0 0 3px rgba(255,253,230,0.4));
+  transition: all 0.2s ease;
+}
+
+.logo-image:hover {
+  filter: drop-shadow(0 0 5px rgba(255,253,230,0.6)) brightness(1.1);
+  transform: scale(1.05);
+}
+
+.form-control {
+  max-width: 160px;
+  transition: max-width 0.3s ease;
+}
+
+.form-control:focus {
+  max-width: 200px;
+}
+
+.btn-outline-success {
+  border-color: #ced4da;
+  color: #6c757d;
+}
+
+.btn-outline-success:hover {
+  background-color: #f8f9fa;
+  color: #212529;
+  border-color: #ced4da;
+}
