@@ -22,6 +22,7 @@ interface FilterOptions {
   brand?: string;
   model?: string;
   onSale?: boolean;
+  search?: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -42,6 +43,7 @@ export class SneakersService {
     if (filter.brand) params = params.append('brand', filter.brand);
     if (filter.model) params = params.append('model', filter.model);
     if (filter.onSale) params = params.append('onSale', filter.onSale.toString());
+    if (filter.search) params = params.append('search', filter.search);
 
     this.http.get<BackendSneaker[]>(this.baseUrl, { params })
       .pipe(
@@ -60,22 +62,8 @@ export class SneakersService {
       });
   }
 
-  private convertBackendSneakerToFrontend(backendSneaker: BackendSneaker): Sneaker {
-    const sizesAvailable = backendSneaker.sizesOfShoe.map(
-      size => new SizeChart(size.size, size.availability)
-    );
-
-    return new Sneaker(
-      backendSneaker.sku,
-      backendSneaker.model,
-      backendSneaker.name,
-      backendSneaker.brand,
-      backendSneaker.colorway,
-      backendSneaker.price,
-      backendSneaker.imagePath,
-      sizesAvailable,
-      backendSneaker.onSale
-    );
+  searchSneakers(searchText: string): void {
+    this.loadSneakersFromAPI({ search: searchText });
   }
 
   getAllSneakers() {
@@ -119,5 +107,25 @@ export class SneakersService {
 
   refreshSneakers(): void {
     this.loadSneakersFromAPI(this.currentFilter);
+  }
+
+
+
+  private convertBackendSneakerToFrontend(backendSneaker: BackendSneaker): Sneaker {
+    const sizesAvailable = backendSneaker.sizesOfShoe.map(
+      size => new SizeChart(size.size, size.availability)
+    );
+
+    return new Sneaker(
+      backendSneaker.sku,
+      backendSneaker.model,
+      backendSneaker.name,
+      backendSneaker.brand,
+      backendSneaker.colorway,
+      backendSneaker.price,
+      backendSneaker.imagePath,
+      sizesAvailable,
+      backendSneaker.onSale
+    );
   }
 }

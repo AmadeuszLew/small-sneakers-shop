@@ -1,0 +1,5 @@
+@media (max-width: 575.98px) {
+  .page-container {
+    padding-bottom: 76px; /* Height of the mobile navbar + some extra space */
+  }
+}

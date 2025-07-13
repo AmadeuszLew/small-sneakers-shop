@@ -17,9 +17,10 @@ public class SneakerController {
     public List<Sneaker> getSneakers(
             @RequestParam(required = false) String brand,
             @RequestParam(required = false) String model,
-            @RequestParam(required = false) Boolean onSale) {
+            @RequestParam(required = false) Boolean onSale,
+            @RequestParam(required = false) String search) {
         
-        return sneakerService.getSneakers(brand, model, onSale);
+        return sneakerService.getSneakers(brand, model, onSale, search);
     }
 
     @GetMapping("/{sku}")

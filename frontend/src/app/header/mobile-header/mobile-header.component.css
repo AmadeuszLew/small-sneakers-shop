@@ -1,0 +1,17 @@
+.mobile-top-header {
+  background-color: #212529;
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+}
+
+.mobile-header-logo {
+  height: 32px;
+  width: auto;
+  filter: drop-shadow(0 0 2px rgba(255,253,230,0.3));
+}
+
+.search-icon {
+  color: white;
+  font-size: 1.25rem;
+}

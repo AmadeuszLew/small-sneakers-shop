@@ -1,11 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
+import {ActivatedRoute, Router, RouterModule} from '@angular/router';
 import { trigger, transition, animate, style } from '@angular/animations';
 
 import { SizeChart } from '../shared/models/size-chart.model';
 import { Sneaker } from './sneaker.model';
 import { SneakersService } from './sneakers.service';
+import {CommonModule} from "@angular/common";
+import {SearchService} from "../shared/search.service";
 
 interface FilterChip {
   type: string;  // 'brand', 'model', 'onSale'
@@ -15,6 +17,11 @@ interface FilterChip {
 
 @Component({
   selector: 'app-sneakers',
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterModule
+  ],
   templateUrl: './sneakers.component.html',
   styleUrls: ['./sneakers.component.css'],
   animations: [
@@ -35,16 +42,22 @@ export class SneakersComponent implements OnInit, OnDestroy {
   isLoading = true;
   activeFilters: FilterChip[] = [];
   private sneakersChangeSubscription: Subscription;
+  private searchSubscription: Subscription;
 
   constructor(
     private sneakerService: SneakersService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private searchService: SearchService
   ) {}
 
   ngOnInit() {
     this.isLoading = true;
     this.sneakers = this.sneakerService.getAllSneakers();
+
+    this.searchSubscription = this.searchService.searchPerformed.subscribe(
+      searchText => this.handleSearch(searchText)
+    );
 
     this.sneakersChangeSubscription = this.sneakerService.sneakersChanged
       .subscribe(
@@ -85,6 +98,15 @@ export class SneakersComponent implements OnInit, OnDestroy {
         });
       }
 
+      if (params['search']) {
+        filters.search = params['search'];
+        this.activeFilters.push({
+          type: 'search',
+          label: `Szukaj: ${params['search']}`,
+          value: params['search']
+        });
+      }
+
       if (Object.keys(filters).length > 0) {
         this.applyFilters(filters);
       } else if (this.sneakers.length === 0) {
@@ -98,6 +120,11 @@ export class SneakersComponent implements OnInit, OnDestroy {
     this.sneakersChangeSubscription.unsubscribe();
   }
 
+  handleSearch(searchText: string): void {
+    const filters = { ...this.route.snapshot.queryParams, search: searchText };
+    this.applyFilters(filters);
+  }
+
   applyFilters(filters: {[key: string]: string}): void {
     this.isLoading = true;
 
@@ -105,6 +132,7 @@ export class SneakersComponent implements OnInit, OnDestroy {
     if (filters.brand) queryParams.brand = filters.brand;
     if (filters.model) queryParams.model = filters.model;
     if (filters.onSale) queryParams.onSale = filters.onSale;
+    if (filters.search) queryParams.search = filters.search;
 
     this.router.navigate([], {
       relativeTo: this.route,
@@ -114,7 +142,8 @@ export class SneakersComponent implements OnInit, OnDestroy {
     this.sneakerService.loadSneakersFromAPI({
       brand: filters.brand,
       model: filters.model,
-      onSale: filters.onSale === 'true'
+      onSale: filters.onSale === 'true',
+      search: filters.search
     });
   }
 
